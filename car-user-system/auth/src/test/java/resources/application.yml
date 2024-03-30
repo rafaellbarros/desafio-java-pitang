@@ -1,0 +1,5 @@
+#Propriedades Documentação
+app-documentation:
+  version: 1.0.0
+  api-title: Auth Car User System Tests
+  description: Auth Car User System Tests
