@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:latest
+    container_name: db_car_user_system
+    restart: always
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "33062:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=c@r123
+      - MYSQL_DATABASE=car_user_system
+    volumes:
+      - db_car_user_system:/var/lib/mysql
+    networks:
+      - car_user_system_network
+
+volumes:
+  db_car_user_system:
+networks:
+  car_user_system_network:

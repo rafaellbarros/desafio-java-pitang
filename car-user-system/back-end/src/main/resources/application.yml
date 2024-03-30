@@ -1,0 +1,50 @@
+
+server:
+  port: 8082
+  compression:
+    enabled: false
+  servlet:
+    contextPath: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    session:
+      cookie:
+        name: car-user-system
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+    register-with-eureka: true
+
+spring:
+  application:
+    name: back-end
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:33062/car_user_system?allowPublicKeyRetrieval=true&sslMode=DISABLED
+    username: root
+    password: c@r123
+
+jwt:
+  config:
+    type: signed
+
+#Propriedades Documentação
+app-documentation:
+  version: @project.version@
+  api-title: API Car User System
+  description: @project.description@
