@@ -1,4 +1,4 @@
-package br.com.rafaellbarros.auth.security.user;
+package br.com.rafaellbarros.security.user;
 
 
 import br.com.rafaellbarros.domain.model.entity.User;

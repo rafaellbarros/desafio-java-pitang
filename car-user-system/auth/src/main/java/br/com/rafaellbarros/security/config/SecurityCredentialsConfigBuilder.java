@@ -1,4 +1,4 @@
-package br.com.rafaellbarros.auth.security.config;
+package br.com.rafaellbarros.security.config;
 
 import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
 import br.com.rafaellbarros.security.token.converter.TokenConverter;

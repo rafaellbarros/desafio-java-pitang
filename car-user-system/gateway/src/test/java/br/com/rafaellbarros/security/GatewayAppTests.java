@@ -1,14 +1,11 @@
-package br.com.rafaellbarros.auth.security;
-
+package br.com.rafaellbarros.security;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class AuthAppTests {
-
+public class GatewayAppTests {
     @Test
     public void contextLoads() {
     }
-
 }

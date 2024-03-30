@@ -1,4 +1,4 @@
-package br.com.rafaellbarros.gateway.security.filter;
+package br.com.rafaellbarros.security.filter;
 
 import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
 import br.com.rafaellbarros.security.filter.JwtTokenAuthorizationFilter;

@@ -1,8 +1,7 @@
-package br.com.rafaellbarros.gateway.security.config;
+package br.com.rafaellbarros.security.config;
 
-import br.com.rafaellbarros.gateway.security.filter.GatewayJwtTokenAuthorizationFilter;
+import br.com.rafaellbarros.security.filter.GatewayJwtTokenAuthorizationFilter;
 import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
-import br.com.rafaellbarros.security.config.SecurityTokenConfig;
 import br.com.rafaellbarros.security.token.converter.TokenConverter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

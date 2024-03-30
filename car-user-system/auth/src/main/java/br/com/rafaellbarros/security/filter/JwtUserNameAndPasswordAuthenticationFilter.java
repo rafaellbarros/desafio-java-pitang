@@ -1,4 +1,4 @@
-package br.com.rafaellbarros.auth.security.filter;
+package br.com.rafaellbarros.security.filter;
 
 import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
 import br.com.rafaellbarros.domain.model.entity.User;

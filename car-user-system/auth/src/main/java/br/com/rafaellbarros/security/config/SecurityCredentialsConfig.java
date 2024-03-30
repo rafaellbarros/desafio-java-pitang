@@ -1,9 +1,8 @@
-package br.com.rafaellbarros.auth.security.config;
+package br.com.rafaellbarros.security.config;
 
-import br.com.rafaellbarros.auth.security.filter.JwtUserNameAndPasswordAuthenticationFilter;
+import br.com.rafaellbarros.security.filter.JwtUserNameAndPasswordAuthenticationFilter;
 
 import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
-import br.com.rafaellbarros.security.config.SecurityTokenConfig;
 import br.com.rafaellbarros.security.filter.JwtTokenAuthorizationFilter;
 import br.com.rafaellbarros.security.token.converter.TokenConverter;
 import br.com.rafaellbarros.security.token.creator.TokenCreator;
