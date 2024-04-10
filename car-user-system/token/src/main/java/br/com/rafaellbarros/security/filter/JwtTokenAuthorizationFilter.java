@@ -1,7 +1,6 @@
 package br.com.rafaellbarros.security.filter;
 
-
-import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
+import br.com.rafaellbarros.core.property.JwtConfiguration;
 import br.com.rafaellbarros.security.token.converter.TokenConverter;
 import br.com.rafaellbarros.security.util.SecurityContextUtil;
 import com.nimbusds.jwt.SignedJWT;

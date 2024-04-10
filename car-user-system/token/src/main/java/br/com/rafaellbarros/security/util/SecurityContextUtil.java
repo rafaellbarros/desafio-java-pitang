@@ -1,7 +1,8 @@
 package br.com.rafaellbarros.security.util;
 
 
-import br.com.rafaellbarros.domain.model.dto.UserDTO;
+
+import br.com.rafaellbarros.core.model.entity.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -28,7 +29,7 @@ public class SecurityContextUtil {
                 throw new JOSEException("Username missing from JWT");
 
             List<String> authorities = claims.getStringListClaim("authorities");
-            UserDTO user = UserDTO
+            User user = User
                     .builder()
                     .id(claims.getLongClaim("userId"))
                     .username(username)

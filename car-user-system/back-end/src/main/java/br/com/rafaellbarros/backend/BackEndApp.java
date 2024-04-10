@@ -1,6 +1,7 @@
 package br.com.rafaellbarros.backend;
 
-import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
+
+import br.com.rafaellbarros.core.property.JwtConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -16,8 +17,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @SpringBootApplication
-@EntityScan({"br.com.rafaellbarros.domain.model.entity"})
-@EnableJpaRepositories({"br.com.rafaellbarros.domain.repository"})
+@EntityScan({"br.com.rafaellbarros.core.model.entity"})
+@EnableJpaRepositories({"br.com.rafaellbarros.core.repository"})
 @EnableConfigurationProperties(value = JwtConfiguration.class)
 @ComponentScan("br.com.rafaellbarros")
 public class BackEndApp {

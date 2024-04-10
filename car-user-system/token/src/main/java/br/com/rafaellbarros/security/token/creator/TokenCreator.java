@@ -1,8 +1,8 @@
 package br.com.rafaellbarros.security.token.creator;
 
 
-import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
-import br.com.rafaellbarros.domain.model.entity.User;
+import br.com.rafaellbarros.core.model.entity.User;
+import br.com.rafaellbarros.core.property.JwtConfiguration;
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JOSEObjectType;

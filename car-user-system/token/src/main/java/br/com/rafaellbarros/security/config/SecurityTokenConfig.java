@@ -1,7 +1,6 @@
 package br.com.rafaellbarros.security.config;
 
-
-import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
+import br.com.rafaellbarros.core.property.JwtConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -21,19 +20,19 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http
-               .csrf().disable()
-               .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
-               .and()
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-               .and()
-                    .exceptionHandling().authenticationEntryPoint((req, resp, e) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-               .and()
-               .authorizeRequests()
-               .antMatchers(jwtConfiguration.getLoginUrl(), "/**/swagger-ui.html", "/**/users/**").permitAll()
-               .antMatchers(HttpMethod.GET, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
-                       "/**/v2/api-docs/**").permitAll()
-               .antMatchers("/car/v1/admin/cars/**").hasAnyRole("ADMIN")
-               .anyRequest().authenticated();
+        http
+                .csrf().disable()
+                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint((req, resp, e) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+                .and()
+                .authorizeRequests()
+                .antMatchers(jwtConfiguration.getLoginUrl(), "/**/swagger-ui.html", "/**/users/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
+                        "/**/v2/api-docs/**").permitAll()
+                .antMatchers("/back-end/api/cars/**").hasRole("USER")
+                .anyRequest().authenticated();
     }
 }

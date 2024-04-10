@@ -1,6 +1,7 @@
 package br.com.rafaellbarros.security.token.converter;
 
-import br.com.rafaellbarros.domain.core.property.JwtConfiguration;
+
+import br.com.rafaellbarros.core.property.JwtConfiguration;
 import com.nimbusds.jose.JWEObject;
 import com.nimbusds.jose.crypto.DirectDecrypter;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
@@ -9,7 +10,6 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 

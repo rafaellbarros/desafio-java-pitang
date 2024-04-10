@@ -7,6 +7,7 @@ server:
   servlet:
     context-path: /gateway
 
+
 eureka:
   instance:
     prefer-ip-address: true
@@ -33,3 +34,7 @@ app-documentation:
   version: @project.version@
   api-title: API Car User System
   description: @project.description@
+
+logging:
+  level:
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
