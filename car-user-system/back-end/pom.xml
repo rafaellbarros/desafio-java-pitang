@@ -31,7 +31,7 @@
 			<artifactId>core</artifactId>
 			<version>${car-user-system-core.version}</version>
 		</dependency>
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<finalName>back-end</finalName>
