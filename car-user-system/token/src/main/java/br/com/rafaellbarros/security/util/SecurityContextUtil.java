@@ -1,19 +1,15 @@
 package br.com.rafaellbarros.security.util;
 
 
-
 import br.com.rafaellbarros.core.model.entity.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.ArrayList;
 
 @Slf4j
 public class SecurityContextUtil {
@@ -24,18 +20,16 @@ public class SecurityContextUtil {
     public static void setSecurityContext(SignedJWT signedJWT) {
         try {
             JWTClaimsSet claims = signedJWT.getJWTClaimsSet();
-            String username = claims.getSubject();
-            if (username == null)
+            String login = claims.getSubject();
+            if (login == null)
                 throw new JOSEException("Username missing from JWT");
 
-            List<String> authorities = claims.getStringListClaim("authorities");
             User user = User
                     .builder()
                     .id(claims.getLongClaim("userId"))
-                    .username(username)
-                    .role(String.join(",", authorities))
+                    .login(login)
                     .build();
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, createAuthorities(authorities));
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             auth.setDetails(signedJWT.serialize());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -43,11 +37,5 @@ public class SecurityContextUtil {
             log.error("Error setting security context ", e);
             SecurityContextHolder.clearContext();
         }
-    }
-
-    private static List<SimpleGrantedAuthority> createAuthorities(List<String> authorities) {
-        return authorities.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(toList());
     }
 }

@@ -1,5 +1,6 @@
 package br.com.rafaellbarros.core.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -24,12 +25,11 @@ public class UserDTO implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    private String username;
     private String email;
     private LocalDate birthday;
     private String login;
+    @JsonIgnore
     private String password;
     private String phone;
-    private String role;
 
 }

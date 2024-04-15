@@ -12,9 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
-
-import static org.springframework.security.core.authority.AuthorityUtils.commaSeparatedStringToAuthorityList;
 
 
 @Slf4j
@@ -25,30 +24,38 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        log.info("Searching in the DB the user by username '{}'", username);
+    public UserDetails loadUserByUsername(String login) {
+        log.info("Searching in the DB the user by username '{}'", login);
 
-        User user = repository.findByUsername(username);
+        User user = repository.findByLogin(login);
 
         log.info("User found '{}'", user);
 
         if (user == null)
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
+            throw new UsernameNotFoundException(String.format("User '%s' not found", login));
         return new CustomUserDetails(user);
     }
 
     private static final class CustomUserDetails extends User implements UserDetails {
         private static final long serialVersionUID = -8003571362645655686L;
 
+        private final User user;
+
         CustomUserDetails(@NotNull User user) {
             super(user);
+            this.user = user;
         }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return commaSeparatedStringToAuthorityList("ROLE_" + this.getRole());
+            return new ArrayList<>();
         }
-        
+
+        @Override
+        public String getUsername() {
+            return this.user.getLogin();
+        }
+
         @Override
         public boolean isAccountNonExpired() {
             return true;

@@ -34,6 +34,8 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User extends BaseEntity<Long> {
 
+    private static final long serialVersionUID = 4883719057030812437L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,10 +47,6 @@ public class User extends BaseEntity<Long> {
     @NotNull(message = "The field 'lastName' is mandatory")
     @Column(nullable = false)
     private String lastName;
-
-    @NotNull(message = "The field 'username' is mandatory")
-    @Column(nullable = false)
-    private String username;
 
     @NotNull(message = "The field 'email' is mandatory")
     @Column(nullable = false)
@@ -71,18 +69,13 @@ public class User extends BaseEntity<Long> {
     @Column(nullable = false)
     private String phone;
 
-    @NotNull(message = "The field 'role' is mandatory")
-    @Column(nullable = false)
-    @Builder.Default
-    private String role = "CAR";
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Car> cars;
     public User(@NotNull User user) {
         this.id = user.getId();
-        this.username = user.getUsername();
+        this.login = user.getLogin();
         this.password = user.getPassword();
-        this.role = user.getRole();
     }
 }

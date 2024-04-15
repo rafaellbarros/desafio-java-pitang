@@ -36,9 +36,9 @@ public class JwtUserNameAndPasswordAuthenticationFilter extends UsernamePassword
         if (user == null)
             throw new UsernameNotFoundException("Unable to retrieve the username or password");
 
-        log.info("Creating the authentication object for the user '{}' and calling UserDetailServiceImpl loadUserByUsername", user.getUsername());
+        log.info("Creating the authentication object for the user '{}' and calling UserDetailServiceImpl loadUserByUsername", user.getLogin());
 
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), emptyList());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword(), emptyList());
 
         usernamePasswordAuthenticationToken.setDetails(user);
 
@@ -60,6 +60,4 @@ public class JwtUserNameAndPasswordAuthenticationFilter extends UsernamePassword
         response.addHeader(jwtConfiguration.getHeader().getName(), jwtConfiguration.getHeader().getPrefix() + encryptToken);
 
     }
-
-
 }

@@ -23,7 +23,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.security.KeyPair;
@@ -31,8 +30,6 @@ import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
 import java.util.UUID;
-
-import static java.util.stream.Collectors.toList;
 
 
 @Slf4j
@@ -75,13 +72,9 @@ public class TokenCreator {
     private JWTClaimsSet createJWTClaimSet(Authentication auth, User user) {
         log.info("Creating the JwtClaimSet Object for '{}'", user);
         return new JWTClaimsSet.Builder()
-                .subject(user.getUsername())
-                .claim("authorities", auth.getAuthorities()
-                        .stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .collect(toList()))
+                .subject(user.getLogin())
                 .claim("userId", user.getId())
-                .claim("username", user.getUsername())
+                .claim("login", user.getLogin())
                 .issuer("https://github.com/rafaellbarros")
                 .issueTime(new Date())
                 .expirationTime(new Date(System.currentTimeMillis() + (jwtConfiguration.getExpiration() * 1000)))
