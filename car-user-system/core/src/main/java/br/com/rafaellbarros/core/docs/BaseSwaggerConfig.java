@@ -1,20 +1,37 @@
 package br.com.rafaellbarros.core.docs;
 
 import br.com.rafaellbarros.core.properties.AppProperties;
+import com.google.common.collect.Lists;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import javax.servlet.ServletContext;
+import java.util.Arrays;
+import java.util.List;
+
+import static springfox.documentation.builders.PathSelectors.regex;
 
 public class BaseSwaggerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(BaseSwaggerConfig.class);
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String BEARER_HEADER = "Bearer";
     private final AppProperties.Documentation properties;
 
     public BaseSwaggerConfig(final AppProperties.Documentation properties) {
@@ -52,7 +69,29 @@ public class BaseSwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .build()
-                .apiInfo(apiInfo());
+                .apiInfo(apiInfo())
+                .securityContexts(Lists.newArrayList(securityContext()))
+                .securitySchemes(Lists.newArrayList(apiKey()));
+    }
+
+    private ApiKey apiKey() {
+    return new ApiKey("JWT", HttpHeaders.AUTHORIZATION, In.HEADER.name());
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+               .forPaths(PathSelectors.ant("/**/cars/**"))
+                .build();
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Lists.newArrayList(
+                new SecurityReference("JWT", authorizationScopes));
     }
 }
 

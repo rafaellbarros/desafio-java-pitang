@@ -37,19 +37,19 @@ public class TokenConverter {
 
     @SneakyThrows
     public void validateTokenSignature(String signedToken) {
-        log.info("Starting method to validate token signature...");
+            log.info("Starting method to validate token signature...");
 
-        SignedJWT signedJWT = SignedJWT.parse(signedToken);
+            SignedJWT signedJWT = SignedJWT.parse(signedToken);
 
-        log.info("Token Parsed! Retrieving public key from signed token");
+            log.info("Token Parsed! Retrieving public key from signed token");
 
-        RSAKey publicKey = RSAKey.parse(signedJWT.getHeader().getJWK().toJSONObject());
+            RSAKey publicKey = RSAKey.parse(signedJWT.getHeader().getJWK().toJSONObject());
 
-        log.info("Public key retrieved, validating signature. . . ");
+            log.info("Public key retrieved, validating signature. . . ");
 
-        if (!signedJWT.verify(new RSASSAVerifier(publicKey)))
-            throw new AccessDeniedException("Invalid token signature!");
+            if (!signedJWT.verify(new RSASSAVerifier(publicKey)))
+                throw new AccessDeniedException("Invalid token signature!");
 
-        log.info("The token has a valid signature");
+            log.info("The token has a valid signature");
     }
 }

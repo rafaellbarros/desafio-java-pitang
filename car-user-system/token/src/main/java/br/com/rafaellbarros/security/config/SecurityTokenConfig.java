@@ -29,9 +29,9 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint((req, resp, e) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .authorizeRequests()
-                .antMatchers(jwtConfiguration.getLoginUrl(),"/**/swagger-ui.html", "/**/users/**").permitAll()
+                .antMatchers(jwtConfiguration.getLoginUrl(),"/**/swagger-ui.html", "/**/users/**", "/**/token/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
                         "/**/v2/api-docs/**").permitAll()
-                .antMatchers("/back-end/api/cars/**").authenticated();
+                .antMatchers("/**/cars/**").authenticated();
     }
 }
