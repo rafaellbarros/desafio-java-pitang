@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] PERMIST_ALL_MATCHERS = {
+    private static final String[] AUTH_WHITE_LIST = {
             "/**/token/**",
             "/**/users/**",
             "/**/swagger-ui.html",
@@ -35,7 +35,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(jwtConfiguration.getLoginUrl()).permitAll()
-                .antMatchers(PERMIST_ALL_MATCHERS).permitAll()
+                .antMatchers(AUTH_WHITE_LIST).permitAll()
                 .anyRequest().authenticated();
     }
 }

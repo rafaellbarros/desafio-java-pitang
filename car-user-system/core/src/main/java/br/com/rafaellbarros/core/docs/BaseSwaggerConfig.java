@@ -6,7 +6,6 @@ import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,23 +21,18 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
-import javax.servlet.ServletContext;
-import java.util.Arrays;
 import java.util.List;
-
-import static springfox.documentation.builders.PathSelectors.regex;
 
 public class BaseSwaggerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(BaseSwaggerConfig.class);
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String BEARER_HEADER = "Bearer";
+    private static final String API_KEY_NAME = "JWT";
+    private static final String SECURITY_CONTEXT_PATH_CARS = "/**/cars/**";
     private final AppProperties.Documentation properties;
 
     public BaseSwaggerConfig(final AppProperties.Documentation properties) {
         this.properties = properties;
     }
 
-    @SuppressWarnings("PMD.AppendCharacterWithChar")
     private ApiInfo apiInfo() {
         final StringBuilder version = new StringBuilder();
         version.append(this.properties.getVersion());
@@ -75,13 +69,13 @@ public class BaseSwaggerConfig {
     }
 
     private ApiKey apiKey() {
-    return new ApiKey("JWT", HttpHeaders.AUTHORIZATION, In.HEADER.name());
+        return new ApiKey(API_KEY_NAME, HttpHeaders.AUTHORIZATION, In.HEADER.name());
     }
 
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-               .forPaths(PathSelectors.ant("/**/cars/**"))
+                .forPaths(PathSelectors.ant(SECURITY_CONTEXT_PATH_CARS))
                 .build();
     }
 
@@ -91,7 +85,7 @@ public class BaseSwaggerConfig {
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return Lists.newArrayList(
-                new SecurityReference("JWT", authorizationScopes));
+                new SecurityReference(API_KEY_NAME, authorizationScopes));
     }
 }
 
