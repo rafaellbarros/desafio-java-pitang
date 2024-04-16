@@ -2,8 +2,6 @@ package br.com.rafaellbarros.security.config;
 
 import br.com.rafaellbarros.core.property.JwtConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -12,9 +10,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import javax.servlet.http.HttpServletResponse;
 
 
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
-
+    private static final String[] PERMIST_ALL_MATCHERS = {
+            "/**/token/**",
+            "/**/users/**",
+            "/**/swagger-ui.html",
+            "/**/swagger-resources/**",
+            "/**/webjars/springfox-swagger-ui/**",
+            "/**/v2/api-docs/**",
+    };
 
     protected final JwtConfiguration jwtConfiguration;
 
@@ -29,9 +34,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint((req, resp, e) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .authorizeRequests()
-                .antMatchers(jwtConfiguration.getLoginUrl(),"/**/swagger-ui.html", "/**/users/**", "/**/token/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**",
-                        "/**/v2/api-docs/**").permitAll()
-                .antMatchers("/**/cars/**").authenticated();
+                .antMatchers(jwtConfiguration.getLoginUrl()).permitAll()
+                .antMatchers(PERMIST_ALL_MATCHERS).permitAll()
+                .anyRequest().authenticated();
     }
 }

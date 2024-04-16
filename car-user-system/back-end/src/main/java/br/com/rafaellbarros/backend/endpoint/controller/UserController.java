@@ -22,14 +22,13 @@ import java.util.List;
 @Api(tags = "Users")
 @RestController
 @RequestMapping("/users")
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService service;
 
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation("findAll all users")
+    @ApiOperation("Find all users")
     public ResponseEntity<List<UserDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }

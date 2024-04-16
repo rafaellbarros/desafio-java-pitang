@@ -24,7 +24,7 @@ public class TokenApiDTO {
     private String dencryptedToken;
 
     public TokenApiDTO(final String dencryptedToken) {
-        this.dencryptedToken = "Bearer " + dencryptedToken;
+        this.dencryptedToken = dencryptedToken;
     }
 
 }

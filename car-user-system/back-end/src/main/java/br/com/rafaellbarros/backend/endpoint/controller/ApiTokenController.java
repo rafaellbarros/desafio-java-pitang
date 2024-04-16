@@ -5,7 +5,6 @@ import br.com.rafaellbarros.core.model.dto.TokenApiDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +24,8 @@ public class ApiTokenController {
 
     @ApiOperation("Get Token Decrypted")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TokenApiDTO> getTokenDecrypted(@Valid @RequestBody TokenApiDTO token) {
-        return new ResponseEntity<>(tokenApiService.getDecryptedToken(token), HttpStatus.OK);
+    public ResponseEntity<TokenApiDTO> getTokenDecrypted(@Valid @RequestBody final TokenApiDTO tokenApiDTO) {
+        return ResponseEntity.ok(tokenApiService.getDecryptedToken(tokenApiDTO));
     }
 
 }

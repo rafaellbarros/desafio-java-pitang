@@ -1,6 +1,7 @@
 package br.com.rafaellbarros.backend.endpoint.service;
 
 import br.com.rafaellbarros.core.model.dto.TokenApiDTO;
+import br.com.rafaellbarros.core.property.JwtConfiguration;
 import br.com.rafaellbarros.security.token.converter.TokenConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,18 +11,22 @@ import org.springframework.stereotype.Service;
 public class TokenApiService {
 
     private final TokenConverter tokenConverter;
-    public TokenApiDTO getDecryptedToken(final TokenApiDTO token) {
-        final TokenApiDTO tokenApiDTO = validationBearer(token);
-        return new TokenApiDTO(tokenConverter.decryptToken(tokenApiDTO
-                .getEncryptedToken()));
+    private final JwtConfiguration jwtConfiguration;
+    public TokenApiDTO getDecryptedToken(final TokenApiDTO tokenApiDTO) {
+        final TokenApiDTO tokenDTO = validationBearer(tokenApiDTO);
+        final String decryptedToken = getDecyptedToken(tokenDTO);
+        return new TokenApiDTO(decryptedToken);
     }
 
-    private TokenApiDTO validationBearer(final TokenApiDTO token) {
-        if (token.getEncryptedToken().contains("Bearer")) {
-            String tokenWithoutBearer = token.getEncryptedToken().replace("Bearer ", "").trim();
-            token.setEncryptedToken(tokenWithoutBearer);
-            return token;
+    private TokenApiDTO validationBearer(final TokenApiDTO tokenApiDTO) {
+        if (tokenApiDTO.getEncryptedToken().contains(jwtConfiguration.getHeader().getPrefix())) {
+            String tokenWithoutBearer = tokenApiDTO.getEncryptedToken().replace(jwtConfiguration.getHeader().getPrefix(), "").trim();
+            tokenApiDTO.setEncryptedToken(tokenWithoutBearer);
+            return tokenApiDTO;
         }
-        return token;
+        return tokenApiDTO;
+    }
+    private String getDecyptedToken(final TokenApiDTO tokenDTO) {
+        return  jwtConfiguration.getHeader().getPrefix() + tokenConverter.decryptToken(tokenDTO.getEncryptedToken());
     }
 }
