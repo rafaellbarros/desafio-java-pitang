@@ -1,5 +1,6 @@
 package br.com.rafaellbarros.core.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @ToString
 @Builder
@@ -26,10 +28,14 @@ public class UserDTO implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthday;
+
     private String login;
     @JsonIgnore
     private String password;
     private String phone;
+    private List<CarDTO> cars;
 
 }
