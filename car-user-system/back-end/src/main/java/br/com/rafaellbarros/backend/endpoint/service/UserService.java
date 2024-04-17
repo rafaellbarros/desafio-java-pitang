@@ -42,7 +42,14 @@ public class UserService {
         return mapper.toDTO(user);
     }
 
+    public void delete(Long id) {
+        final User user = fiindEntityById(id);
+        repository.delete(user);
+    }
+
     private User fiindEntityById(final Long id) {
         return repository.findById(id).orElseThrow(() -> new BusinessException("User not found."));
     }
+
+
 }

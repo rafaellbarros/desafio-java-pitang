@@ -47,6 +47,9 @@ class UserServiceTest {
         BDDMockito.when(repositoryMock.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.of(userMock));
 
+        BDDMockito.doNothing().when(repositoryMock).delete(ArgumentMatchers.any(User.class));
+
+
     }
 
     @Test
@@ -76,5 +79,11 @@ class UserServiceTest {
         Assertions.assertThat(userDTO).isNotNull();
 
         Assertions.assertThat(userDTO.getId()).isNotNull().isEqualTo(expectedId);
+    }
+
+    @Test
+    void testDeleteById() {
+        Assertions.assertThatCode(() -> service.delete(1L))
+                .doesNotThrowAnyException();
     }
 }
