@@ -3,11 +3,13 @@ package br.com.rafaellbarros.backend.endpoint.service;
 import br.com.rafaellbarros.backend.endpoint.mapper.UserMapper;
 import br.com.rafaellbarros.backend.utils.UserCreator;
 import br.com.rafaellbarros.core.model.dto.UserDTO;
+import br.com.rafaellbarros.core.model.entity.User;
 import br.com.rafaellbarros.core.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,8 +32,13 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
+
         BDDMockito.when(mapperMock.toDTO(repositoryMock.findAll()))
                 .thenReturn(singletonList(userDTOMock));
+
+        BDDMockito.when(mapperMock.toDTO(repositoryMock.save(ArgumentMatchers.any(User.class))))
+                .thenReturn(userDTOMock);
+
     }
 
     @Test
@@ -43,5 +50,12 @@ class UserServiceTest {
                 .isNotNull()
                 .isNotEmpty()
                 .hasSize(1);
+    }
+
+    @Test
+    void testCreate() {
+        final UserDTO userDTO = service.create(UserCreator.createUserDTOtoBeSaved());
+
+        Assertions.assertThat(userDTO).isNotNull().isEqualTo(userDTOMock);
     }
 }
