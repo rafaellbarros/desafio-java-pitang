@@ -47,9 +47,13 @@ public class UserService {
         repository.delete(user);
     }
 
+    public UserDTO update(final UserDTO userDTO) {
+        final User user = fiindEntityById(userDTO.getId());
+        mapper.fromDTO(userDTO, user);
+        return  mapper.toDTO(repository.save(user));
+    }
+
     private User fiindEntityById(final Long id) {
         return repository.findById(id).orElseThrow(() -> new BusinessException("User not found."));
     }
-
-
 }

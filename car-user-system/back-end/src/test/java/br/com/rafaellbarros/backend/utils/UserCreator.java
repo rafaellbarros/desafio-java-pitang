@@ -15,7 +15,6 @@ public class UserCreator {
     private static final Car car  = CarCreator.createValidCar();
 
     public static UserDTO createUserDTOtoBeSaved() {
-
         return UserDTO.builder()
                 .firstName("Hello")
                 .lastName("World")
@@ -24,6 +23,20 @@ public class UserCreator {
                 .login("hello.world")
                 .password(new BCryptPasswordEncoder().encode("h3ll0"))
                 .phone("988888888")
+                .build();
+    }
+
+    public static UserDTO createValidUpdateUserDTO() {
+        return UserDTO.builder()
+                .id(1L)
+                .firstName("Hello Update")
+                .lastName("World Update")
+                .email("hello@world.com")
+                .birthday(LocalDate.of(1988,11,29))
+                .login("hello.xablau")
+                .password(new BCryptPasswordEncoder().encode("xablau123"))
+                .phone("988888888")
+                .cars(Collections.singletonList(carDTO))
                 .build();
     }
 

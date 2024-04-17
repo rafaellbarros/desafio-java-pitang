@@ -86,4 +86,16 @@ class UserServiceTest {
         Assertions.assertThatCode(() -> service.delete(1L))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    void testUpdateById() {
+        UserDTO validUpdateUserDTO = UserCreator.createValidUpdateUserDTO();
+
+        BDDMockito.when(mapperMock.toDTO(repositoryMock.save(ArgumentMatchers.any(User.class))))
+                .thenReturn(validUpdateUserDTO);
+
+        final UserDTO userDTO = service.update(validUpdateUserDTO);
+
+        Assertions.assertThat(userDTO).isNotNull().isEqualTo(validUpdateUserDTO);
+    }
 }
