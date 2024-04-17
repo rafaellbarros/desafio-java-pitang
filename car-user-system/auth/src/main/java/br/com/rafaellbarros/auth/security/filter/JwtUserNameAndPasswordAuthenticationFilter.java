@@ -23,6 +23,7 @@ import static java.util.Collections.emptyList;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtUserNameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
     private final AuthenticationManager authenticationManager;
     private final JwtConfiguration jwtConfiguration;
     private final TokenCreator tokenCreator;
@@ -51,13 +52,11 @@ public class JwtUserNameAndPasswordAuthenticationFilter extends UsernamePassword
         log.info("Authentication was successful for the user  '{}', generating JWE token", auth.getName());
         final SignedJWT signedJWT = tokenCreator.createSignedJWT(auth);
 
-        final String encryptToken = tokenCreator.encryptToken(signedJWT);
-
         log.info("Token generated successfully, adding it to the response header");
 
         response.addHeader("Access-Control-Expose-Headers", "XSRF-TOKEN, " + jwtConfiguration.getHeader().getName());
 
-        response.addHeader(jwtConfiguration.getHeader().getName(), jwtConfiguration.getHeader().getPrefix() + encryptToken);
+        response.addHeader(jwtConfiguration.getHeader().getName(), jwtConfiguration.getHeader().getPrefix() + signedJWT.serialize());
 
     }
 }

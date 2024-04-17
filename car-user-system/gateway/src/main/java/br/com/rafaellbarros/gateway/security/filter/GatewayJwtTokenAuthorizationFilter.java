@@ -34,9 +34,7 @@ public class GatewayJwtTokenAuthorizationFilter extends JwtTokenAuthorizationFil
             return;
         }
 
-        String token = header.replace(jwtConfiguration.getHeader().getPrefix(), "").trim();
-
-        String signedToken = tokenConverter.decryptToken(token);
+        String signedToken = header.replace(jwtConfiguration.getHeader().getPrefix(), "").trim();
 
         tokenConverter.validateTokenSignature(signedToken);
 

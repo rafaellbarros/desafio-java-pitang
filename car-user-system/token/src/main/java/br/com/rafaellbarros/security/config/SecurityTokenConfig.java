@@ -21,6 +21,10 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             "/**/v2/api-docs/**",
     };
 
+    private static final String [] AUTH_BLACK_LIST = {
+            "/back-end/api/cars/**"
+    };
+
     protected final JwtConfiguration jwtConfiguration;
 
     @Override
@@ -36,6 +40,6 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(jwtConfiguration.getLoginUrl()).permitAll()
                 .antMatchers(AUTH_WHITE_LIST).permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(AUTH_BLACK_LIST).authenticated();
     }
 }
