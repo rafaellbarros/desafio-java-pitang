@@ -26,7 +26,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_car")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Car extends BaseEntity<Long> {
 
     private static final long serialVersionUID = 5460748267904999209L;

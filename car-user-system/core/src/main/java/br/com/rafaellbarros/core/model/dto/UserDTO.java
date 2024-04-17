@@ -2,6 +2,7 @@ package br.com.rafaellbarros.core.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -21,7 +22,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO implements Serializable {
+
     private static final long serialVersionUID = -5122051060452034654L;
 
     private Long id;

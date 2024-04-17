@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 
@@ -30,6 +31,8 @@ class UserServiceTest {
     private UserMapper mapperMock;
     private final UserDTO userDTOMock = UserCreator.createValidUserDTO();
 
+    private final User userMock = UserCreator.createValidUser();
+
     @BeforeEach
     void setUp() {
 
@@ -38,6 +41,11 @@ class UserServiceTest {
 
         BDDMockito.when(mapperMock.toDTO(repositoryMock.save(ArgumentMatchers.any(User.class))))
                 .thenReturn(userDTOMock);
+
+        BDDMockito.when(mapperMock.toDTO(userMock))
+                .thenReturn(userDTOMock);
+        BDDMockito.when(repositoryMock.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.of(userMock));
 
     }
 
@@ -57,5 +65,16 @@ class UserServiceTest {
         final UserDTO userDTO = service.create(UserCreator.createUserDTOtoBeSaved());
 
         Assertions.assertThat(userDTO).isNotNull().isEqualTo(userDTOMock);
+    }
+
+    @Test
+    void testFindById() {
+        final Long expectedId = userDTOMock.getId();
+
+        final UserDTO userDTO = service.findById(1L);
+
+        Assertions.assertThat(userDTO).isNotNull();
+
+        Assertions.assertThat(userDTO.getId()).isNotNull().isEqualTo(expectedId);
     }
 }
