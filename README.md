@@ -4,16 +4,14 @@
 
 Como desenvolvedor encarregado do backend de um Sistema de Usuários de Carros, busco criar uma API RESTful para simplificar o gerenciamento de usuários e seus respectivos carros.
 
-### Critérios de Aceitação:
+### Critérios de Aceitação Usuários:
 
-1. Como usuário, desejo criar uma conta fornecendo meu nome, sobrenome, e-mail, data de nascimento, login, senha e telefone.
-2. Como usuário, necessito poder atualizar minhas informações, incluindo nome, sobrenome, e-mail, data de nascimento, login, senha e telefone.
-3. Como usuário, pretendo visualizar minhas informações de perfil, incluindo nome, sobrenome, e-mail, data de nascimento, login, senha e telefone.
-4. Como usuário, desejo adicionar um carro à minha lista, fornecendo detalhes como ano de fabricação, placa, modelo e cor.
-5. Como usuário, espero visualizar a lista de carros que possuo, incluindo detalhes como ano de fabricação, placa, modelo e cor de cada carro.
-6. Como usuário, desejo poder atualizar as informações de um carro específico, incluindo ano de fabricação, placa, modelo e cor.
-7. Como usuário, desejo poder excluir um carro específico da minha lista de carros.
-8. Como usuário, desejo poder excluir minha conta, removendo todas as informações associadas, incluindo meus carros.
+1. Como usuário, desejo acessar a minha conta fornecendo meu login e senha.
+2. Como usuário, desejo listar todos os usuários.
+3. Como usuário, desejo cadastrar um novo usuário com os seguintes campos: nome, sobrenome, e-mail, data de nascimento, login, senha, telefone e carros.
+4. Como usuário, desejo buscar um usuário pelo id.
+5. Como usuário, desejo remover um usuário pelo id.
+6. Como usuário, desejo atualizar um usuário pelo id.
 
 ### Especificações:
 
