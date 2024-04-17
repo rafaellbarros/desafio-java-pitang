@@ -1,6 +1,7 @@
 package br.com.rafaellbarros.backend.endpoint.service;
 
 import br.com.rafaellbarros.backend.endpoint.mapper.UserMapper;
+import br.com.rafaellbarros.backend.endpoint.validation.UserValidation;
 import br.com.rafaellbarros.backend.utils.UserCreator;
 import br.com.rafaellbarros.core.model.dto.UserDTO;
 import br.com.rafaellbarros.core.model.entity.User;
@@ -29,6 +30,10 @@ class UserServiceTest {
     private UserRepository repositoryMock;
     @Mock
     private UserMapper mapperMock;
+
+    @Mock
+    private  UserValidation validationMock;
+
     private final UserDTO userDTOMock = UserCreator.createValidUserDTO();
 
     private final User userMock = UserCreator.createValidUser();
@@ -65,7 +70,9 @@ class UserServiceTest {
 
     @Test
     void testCreate() {
-        final UserDTO userDTO = service.create(UserCreator.createUserDTOtoBeSaved());
+        UserDTO userDTOtoBeSaved = UserCreator.createUserDTOtoBeSaved();
+
+        final UserDTO userDTO = service.create(userDTOtoBeSaved);
 
         Assertions.assertThat(userDTO).isNotNull().isEqualTo(userDTOMock);
     }

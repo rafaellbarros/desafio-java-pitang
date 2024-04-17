@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,38 +39,29 @@ public class User extends BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "The field 'firstName' is mandatory")
     @Column(nullable = false)
     private String firstName;
 
-    @NotNull(message = "The field 'lastName' is mandatory")
     @Column(nullable = false)
     private String lastName;
 
-    @NotNull(message = "The field 'email' is mandatory")
     @Column(nullable = false)
     private String email;
 
-    @NotNull(message = "The field 'birthday' is mandatory")
     @Column(nullable = false)
     private LocalDate birthday;
 
-    @NotNull(message = "The field 'login' is mandatory")
     @Column(nullable = false)
     private String login;
 
     @ToString.Exclude
-    @NotNull(message = "The field 'password' is mandatory")
     @Column(nullable = false)
     private String password;
 
-    @NotNull(message = "The field 'phone' is mandatory")
-    @Column(nullable = false)
+    @Column
     private String phone;
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
     private List<Car> cars;
     public User(@NotNull User user) {
         this.id = user.getId();

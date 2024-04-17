@@ -1,12 +1,9 @@
 package br.com.rafaellbarros.core.exception.handler;
 
-import br.com.rafaellbarros.core.exception.InfraException;
-
 import br.com.rafaellbarros.core.exception.BusinessException;
+import br.com.rafaellbarros.core.exception.InfraException;
 import br.com.rafaellbarros.core.exception.ResourceNotFoundException;
 import br.com.rafaellbarros.core.exception.SecurityValidationException;
-
-
 import br.com.rafaellbarros.core.message.CoreMessageProperty;
 import br.com.rafaellbarros.core.message.ErrorMessage;
 import br.com.rafaellbarros.core.message.IMessageProperty;
@@ -26,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice
-public class AppExceptionHandler extends ResponseEntityExceptionHandler {
+public class CoreExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AppExceptionHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CoreExceptionHandler.class);
 
     @ExceptionHandler({AccessDeniedException.class})
     protected ResponseEntity<Object> handleAccessDenied(final AccessDeniedException ex, final WebRequest request) {
@@ -40,14 +37,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({BusinessException.class})
     protected ResponseEntity<Object> handleSecurity(final BusinessException ex, final WebRequest request) {
-        final List<ErrorMessage> erros =  new ArrayList<>();
+        final List<ErrorMessage> erros = new ArrayList<>();
         LOG.debug(ex.getMessage(), ex);
         if (ex.getMessages().isEmpty()) {
-            erros.add(new ErrorMessage(ex.getCause().getClass().getName(), ex.getMessage()));
+            erros.add(new ErrorMessage(ex.getCause().getClass().getName(), ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
         } else {
-            ex.getMessages().iterator().forEachRemaining(msg -> erros.add(new ErrorMessage(msg)));
+            ex.getMessages().iterator().forEachRemaining(msg -> erros.add(new ErrorMessage(msg, HttpStatus.BAD_REQUEST.value())));
             if (erros.isEmpty()) {
-                erros.add(new ErrorMessage(CoreMessageProperty.API_UNDENTIFIED_ERROR));
+                erros.add(new ErrorMessage(CoreMessageProperty.API_UNDENTIFIED_ERROR, HttpStatus.BAD_REQUEST.value()));
             }
         }
         return this.handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -87,7 +84,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   final HttpHeaders headers, final HttpStatus status,
                                                                   final WebRequest request) {
         final List<ErrorMessage> erros = new ArrayList<>();
-        erros.add(new ErrorMessage(ex.getParameter().getParameterName(), ex.getBindingResult().toString()));
+        erros.add(new ErrorMessage(ex.getParameter().getParameterName(), ex.getBindingResult().toString(), HttpStatus.BAD_REQUEST.value()));
         LOG.debug(ex.getMessage(), ex);
         return this.handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }

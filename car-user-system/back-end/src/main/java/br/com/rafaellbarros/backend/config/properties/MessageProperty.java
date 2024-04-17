@@ -1,17 +1,22 @@
-package br.com.rafaellbarros.core.message;
+package br.com.rafaellbarros.backend.config.properties;
+
+import br.com.rafaellbarros.core.message.IMessageProperty;
+import br.com.rafaellbarros.core.message.MessageSource;
 
 import java.util.Arrays;
 
-public enum CoreMessageProperty implements IMessageProperty {
-    API_ACCESS_DENIED("api.access-denied"),
-    API_UNDENTIFIED_ERROR("api.unidentified-error"),
-    API_RESOURCE_NOTFOUND("api.resource-notfound");
+public enum MessageProperty  implements IMessageProperty {
+
+    USER_NOT_FOUND("user-not-found"),
+    EMAIL_ALREADY_EXISTS("email-already-exists"),
+    LOGIN_ALREADY_EXISTS("login-already-exists");
 
     private String key;
     private String[] args = {};
 
-    CoreMessageProperty(final String paramKey) {
-        this.key = paramKey;
+
+    MessageProperty(final String keyValue) {
+        this.key = keyValue;
     }
 
     @Override
@@ -34,4 +39,3 @@ public enum CoreMessageProperty implements IMessageProperty {
         return this;
     }
 }
-

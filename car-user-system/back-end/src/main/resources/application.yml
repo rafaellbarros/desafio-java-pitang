@@ -39,3 +39,8 @@ app-documentation:
   version: @project.version@
   api-title: API Car User System
   description: @project.description@
+
+logging:
+  level:
+    org.springframework.security: ERROR
+    org.hibernate: INFO

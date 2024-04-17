@@ -75,10 +75,11 @@ class BackEndAppTests {
 				.layer("Controller").definedBy("..controller..")
 				.layer("Service").definedBy("..service..")
 				.layer("Repository").definedBy("..repository..")
+				.layer("Validation").definedBy("..validation..")
 
 				.whereLayer("Controller").mayNotBeAccessedByAnyLayer()
 				.whereLayer("Service").mayOnlyBeAccessedByLayers("Controller")
-				.whereLayer("Repository").mayOnlyBeAccessedByLayers("Service")
+				.whereLayer("Repository").mayOnlyBeAccessedByLayers("Service", "Validation")
 				.check(importedClasses);
 	}
 
