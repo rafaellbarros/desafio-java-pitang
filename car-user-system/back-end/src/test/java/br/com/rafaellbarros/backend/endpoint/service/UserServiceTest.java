@@ -58,7 +58,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testFindAll() {
+    void findAll() {
 
         List<UserDTO> usersDTO = service.findAll();
 
