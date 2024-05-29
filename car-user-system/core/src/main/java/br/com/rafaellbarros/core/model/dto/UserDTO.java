@@ -2,6 +2,7 @@ package br.com.rafaellbarros.core.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +48,7 @@ public class UserDTO implements Serializable {
     private String login;
 
     @NotNull
+    @JsonIgnore
     private String password;
 
     private String phone;

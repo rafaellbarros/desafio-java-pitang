@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -67,5 +68,12 @@ public class User extends BaseEntity<Long> {
         this.id = user.getId();
         this.login = user.getLogin();
         this.password = user.getPassword();
+    }
+
+    public List<Car> getCars() {
+        if (this.cars == null) {
+            this.cars = new ArrayList<>();
+        }
+        return this.cars;
     }
 }

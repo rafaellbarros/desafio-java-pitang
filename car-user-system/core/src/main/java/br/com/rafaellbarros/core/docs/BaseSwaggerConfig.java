@@ -68,6 +68,7 @@ public class BaseSwaggerConfig {
                 .securitySchemes(Lists.newArrayList(apiKey()));
     }
 
+
     private ApiKey apiKey() {
         return new ApiKey(API_KEY_NAME, HttpHeaders.AUTHORIZATION, In.HEADER.name());
     }

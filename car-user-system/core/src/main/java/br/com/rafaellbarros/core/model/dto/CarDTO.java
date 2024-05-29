@@ -28,5 +28,4 @@ public class CarDTO implements Serializable {
     private String licensePlate;
     private String model;
     private String color;
-    private UserDTO userDTO;
 }
