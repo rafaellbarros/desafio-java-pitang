@@ -1,68 +1,101 @@
 version: '3'
 services:
-  jenkins:
-    image: jenkins/jenkins:lts
-    volumes:
-      - jenkins-data:/var/jenkins_home
+  mysql:
+    image: mysql:8.0
+    container_name: db-back
+    restart: always
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
-      - "8082:8080"
-    networks:
-      - devops_network
-  sonarqube:
-    image: sonarqube:lts-community
-    container_name: sonarqube
+      - 33063:3306
     environment:
-      SONAR_JDBC_URL: jdbc:postgresql://sonar_db:5432/sonar
-      SONAR_JDBC_USERNAME: sonar
-      SONAR_JDBC_PASSWORD: sonar
+      - MYSQL_ROOT_PASSWORD=c@r123
+      - MYSQL_DATABASE=car-user-system
+    volumes:
+      - db-car-user-system:/var/lib/mysql
+    networks:
+      - backend
+
+  eureka-server:
+    build: ./car-user-system/discovery
     ports:
-      - "9001:9000"
+      - 8081:8080
+    networks:
+      - backend
+    environment:
+      eureka.instance.hostname: eureka-server
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8081/eureka/
+
+  gateway:
+    build: ./car-user-system/gateway
+    ports:
+      - 8080:8080
+    networks:
+      - backend
     depends_on:
-      - sonar_db      
-    networks:
-      - devops_network
-    volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_logs:/opt/sonarqube/logs
-      - sonarqube_temp:/opt/sonarqube/temp
-  sonar_db:
-    image: postgres:13
-    container_name: sonar_db
-    restart: always
+      - eureka-server
     environment:
-      POSTGRES_USER: sonar
-      POSTGRES_PASSWORD: sonar
-      POSTGRES_DB: sonar
-    volumes:
-      - sonar_db:/var/lib/postgresql
-      - sonar_db_data:/var/lib/postgresql/data
-    networks:
-      - devops_network
-  nexus:
-    image: sonatype/nexus3
-    container_name: nexus
-    restart: always
-    volumes:
-      - "nexus_data:/sonatype-work"
+      server.port: 8080
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8081/eureka/
+
+  auth:
+    build: ./car-user-system/auth
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-back:3306/car-user-system
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: c@r123
+      server.port: 8083
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8081/eureka/
     ports:
-      - "8081:8081"
-      - "8085:8085"
+      - 8083:8080
+    depends_on:
+      - mysql
     networks:
-      - devops_network             
-    
+      - backend
+
+  back-end:
+    build: ./car-user-system/back-end
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-back:3306/car-user-system
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: c@r123
+      server.port: 8082
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8081/eureka/
+    ports:
+      - 8082:8080
+    depends_on:
+      - mysql
+    networks:
+      - backend
+
+  frontend:
+    build: ./front-car-user-system/.
+    ports:
+      - '80:80'
+    networks:
+      - frontend
+
+  #jenkins:
+  #  build: ./jenkins
+  #  ports:
+  #    - '8089:8080'
+  #    - '50009:50000'
+  #  volumes:
+  #    - jenkins-home:/var/jenkins_home
+  #    - /var/run/docker.sock:/var/run/docker.sock
+  #  networks:
+  #    - backend
+
+  #sonarqube:
+  #  build: ./sonarqube
+  #  ports:
+  #    - '9001:9000'
+  #  networks:
+  #    - backend
 
 networks:
-  devops_network:     
-      
+  backend:
+  frontend:
+
 volumes:
-  jenkins-data:
-  sonarqube_conf:
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_logs:
-  sonarqube_temp:
-  sonar_db:
-  sonar_db_data:
-  nexus_data:
+  db-car-user-system:
+  #jenkins-home:
