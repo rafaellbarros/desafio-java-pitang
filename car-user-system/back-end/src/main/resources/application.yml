@@ -1,8 +1,6 @@
 
 server:
   port: 8082
-  servlet:
-    contextPath: /api
 
 eureka:
   instance:
@@ -26,9 +24,10 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:mysql://localhost:33062/car_user_system?allowPublicKeyRetrieval=true&sslMode=DISABLED
+    url: jdbc:mysql://localhost:33063/car-user-system
     username: root
     password: c@r123
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 jwt:
   config:
@@ -39,6 +38,8 @@ app-documentation:
   version: @project.version@
   api-title: API Car User System
   description: @project.description@
+
+apiPrefix: /api
 
 logging:
   level:

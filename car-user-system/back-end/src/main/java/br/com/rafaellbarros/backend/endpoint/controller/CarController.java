@@ -20,7 +20,7 @@ import java.util.List;
 
 @Api(tags = "Car")
 @RestController
-@RequestMapping("/cars")
+@RequestMapping("${apiPrefix}/cars")
 @RequiredArgsConstructor
 public class CarController {
 

@@ -30,4 +30,5 @@ public interface CarMapper extends BaseMapper<Car, CarDTO> {
     @Override
     @InheritInverseConfiguration(name = "toDTO")
     void fromDTO(CarDTO dto, @MappingTarget Car entity);
+
 }

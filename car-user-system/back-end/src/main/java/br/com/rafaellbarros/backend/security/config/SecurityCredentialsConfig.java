@@ -23,6 +23,5 @@ public class SecurityCredentialsConfig extends SecurityTokenConfig {
         http.addFilterAfter(new JwtTokenAuthorizationFilter(jwtConfiguration, tokenConverter),
                 UsernamePasswordAuthenticationFilter.class);
         super.configure(http);
-
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 
 @Api(tags = "Users")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("${apiPrefix}/users")
 @RequiredArgsConstructor
 public class UserController {
 
