@@ -194,3 +194,189 @@ Angular 17 foi escolhido por ser um framework moderno e robusto para desenvolvim
 ### Bootstrap
 
 Bootstrap é utilizado para estilização e design responsivo. Ele fornece uma coleção de componentes CSS e JavaScript que facilitam a criação de interfaces de usuário atraentes e funcionais com um esforço mínimo.
+
+# Instalação
+
+### Requisitos
+
+- Java 8
+- Maven
+- Docker
+- Angular 17
+- Node.js
+- NPM
+
+### Executar a Aplicação em Docker
+
+- 1. Subir o Docker Compose:
+
+  ```ruby
+    docker --version
+    Docker version 25.0.3, build 4debf41
+  ```
+
+  ```ruby
+    docker-compose --version
+    Docker Compose version v2.24.6-desktop.1
+  ```
+
+  ```ruby
+    docker-compose up -d
+  ```
+
+2. Acessar Aplicação:
+
+   - Navegue para http://localhost
+
+3. Acessar Api:
+
+   - Navegue para http://localhost:8080/gateway/back-end/swagger-ui.html
+
+### Executar a Aplicação Local
+
+1. Subir aplicação back-end:
+
+```ruby
+  cd car-user-system
+```
+
+```ruby
+  docker --version
+  Docker version 25.0.3, build 4debf41
+```
+
+```ruby
+  docker-compose --version
+  Docker Compose version v2.24.6-desktop.1
+```
+
+Subindo o banco de dados
+
+```ruby
+  docker-compose -f back-end/docker-compose.yml up -d
+
+  [+] Running 1/3
+    ⠸ Network back-end_backend               Created 0.4s
+    ⠸ Volume "back-end_db-car-user-system"   Created 0.3s
+    ✔ Container db-back                      Started
+```
+
+Maven
+
+```ruby
+  mvn --version
+```
+
+```ruby
+  Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae)
+  Maven home: /home/rafael/envs/tools/maven-3.9.6
+  Java version: 1.8.0_402, vendor: Temurin, runtime: /home/rafael/.sdkman/candidates/java/8.0.402-tem/jre
+  Default locale: en, platform encoding: UTF-8
+  OS name: "linux", version: "5.15.146.1-microsoft-standard-wsl2", arch: "amd64", family: "unix"
+```
+
+```sh
+  mvn clean install
+```
+
+```ruby
+  [INFO] ------------------------------------------------------------------------
+  [INFO] Reactor Summary:
+  [INFO]
+  [INFO] car-user-system 1.0-SNAPSHOT ....................... SUCCESS [  0.348 s]
+  [INFO] core 1.0-SNAPSHOT .................................. SUCCESS [  5.006 s]
+  [INFO] token 1.0-SNAPSHOT ................................. SUCCESS [  0.505 s]
+  [INFO] back-end 0.0.1-SNAPSHOT ............................ SUCCESS [  8.181 s]
+  [INFO] discovery 0.0.1-SNAPSHOT ........................... SUCCESS [  1.814 s]
+  [INFO] gateway 0.0.1-SNAPSHOT ............................. SUCCESS [  1.885 s]
+  [INFO] auth 0.0.1-SNAPSHOT ................................ SUCCESS [  1.740 s]
+  [INFO] ------------------------------------------------------------------------
+  [INFO] BUILD SUCCESS
+  [INFO] ------------------------------------------------------------------------
+  [INFO] Total time:  19.741 s
+  [INFO] Finished at: 2024-06-06T02:18:22-03:00
+  [INFO] ------------------------------------------------------------------------
+```
+
+```ruby
+  java -version
+  openjdk version "1.8.0_402"
+  OpenJDK Runtime Environment (Temurin)(build 1.8.0_402-b06)
+  OpenJDK 64-Bit Server VM (Temurin)(build 25.402-b06, mixed mode)
+```
+
+Abrir um terminal pra cada aplicação
+
+### 1. Discovery (Eureka)
+
+```ruby
+  java -jar discovery/target/discovery.jar
+
+  2024-06-06 02:27:12.792  INFO 38693 --- [      Thread-11] o.s.c.n.e.server.EurekaServerBootstrap   : Initialized server context
+  2024-06-06 02:27:12.792  INFO 38693 --- [      Thread-11] c.n.e.r.PeerAwareInstanceRegistryImpl    : Got 1 instances from neighboring DS node
+  2024-06-06 02:27:12.792  INFO 38693 --- [      Thread-11] c.n.e.r.PeerAwareInstanceRegistryImpl    : Renew threshold is: 1
+  2024-06-06 02:27:12.792  INFO 38693 --- [      Thread-11] c.n.e.r.PeerAwareInstanceRegistryImpl    : Changing status to UP
+  2024-06-06 02:27:12.804  INFO 38693 --- [      Thread-11] e.s.EurekaServerInitializerConfiguration : Started Eureka Server
+  2024-06-06 02:27:12.819  INFO 38693 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+  2024-06-06 02:27:12.820  INFO 38693 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+  2024-06-06 02:27:13.821  INFO 38693 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+  2024-06-06 02:27:13.822  INFO 38693 --- [           main] b.c.r.discovery.DiscoveryApp             : Started DiscoveryApp in 11.136 seconds (JVM running for 11.576)
+```
+
+### 2. Gateway (Zuul)
+
+```ruby
+  java -jar gateway/target/gateway.jar
+
+  2024-06-06 02:33:28.797  INFO 43126 --- [           main] b.c.r.gateway.security.GatewayApp        : Started GatewayApp in 11.596 seconds (JVM running for 12.057)
+  2024-06-06 02:33:57.710  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+  2024-06-06 02:33:57.711  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+  2024-06-06 02:33:57.711  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+  2024-06-06 02:33:57.711  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : Application is null : false
+  2024-06-06 02:33:57.711  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+  2024-06-06 02:33:57.711  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+  2024-06-06 02:33:57.711  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+  2024-06-06 02:33:57.751  INFO 43126 --- [freshExecutor-0] com.netflix.discovery.DiscoveryClient    : The response status is 200
+```
+
+### 3. Auth (Security)
+
+```ruby
+  java -jar auth/target/auth.jar
+
+  2024-06-06 02:55:33.139  INFO 57307 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH/localhost:auth:8083: registering service...
+  2024-06-06 02:55:33.178  INFO 57307 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+  2024-06-06 02:55:33.179  INFO 57307 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8083
+  2024-06-06 02:55:33.181  INFO 57307 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH/localhost:auth:8083 - registration status: 204
+  2024-06-06 02:55:34.180  INFO 57307 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+  2024-06-06 02:55:34.182  INFO 57307 --- [           main] b.c.rafaellbarros.auth.security.AuthApp  : Started AuthApp in 11.347 seconds (JVM running for 11.693)
+```
+
+### 4. Back-End (Api)
+
+```ruby
+  java -jar back-end/target/back-end.jar
+
+  2024-06-06 02:58:12.503  INFO 59435 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_BACK-END/localhost:back-end:8082 - registration status: 204
+  2024-06-06 02:58:12.507  INFO 59435 --- [           main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+  2024-06-06 02:58:12.637  INFO 59435 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+  2024-06-06 02:58:12.638  INFO 59435 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8082
+  2024-06-06 02:58:13.638  INFO 59435 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+  2024-06-06 02:58:13.640  INFO 59435 --- [           main] br.com.rafaellbarros.backend.BackEndApp  : Started BackEndApp in 11.607 seconds (JVM running for 12.01)
+  2024-06-06 02:58:13.642  INFO 59435 --- [           main] br.com.rafaellbarros.backend.BackEndApp  :
+
+  ***
+
+          Aplicacao back-end iniciada com sucesso!
+          Disponivel nos enderecos:
+          Local: http://localhost:8082
+          Swagger Local Url: http://localhost:8082/swagger-ui.html
+
+  ***
+
+  2024-06-06 02:59:28.628  INFO 59435 --- [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+  2024-06-06 02:59:28.629  INFO 59435 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+  2024-06-06 02:59:28.639  INFO 59435 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
+```
+
+![Swagger Local](car-user-system/docs/images/swagger-local.png)
