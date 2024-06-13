@@ -2,7 +2,9 @@ package br.com.rafaellbarros.backend.endpoint.service;
 
 import br.com.rafaellbarros.backend.endpoint.mapper.CarMapper;
 import br.com.rafaellbarros.backend.utils.CarCreator;
+import br.com.rafaellbarros.backend.utils.UserCreator;
 import br.com.rafaellbarros.core.model.dto.CarDTO;
+import br.com.rafaellbarros.core.model.dto.UserDTO;
 import br.com.rafaellbarros.core.model.entity.Car;
 import br.com.rafaellbarros.core.model.entity.User;
 import br.com.rafaellbarros.core.repository.CarRepository;
@@ -26,36 +28,56 @@ class CarServiceTest {
     @InjectMocks
     private CarService service;
     @Mock
-    private CarRepository repositoryMock;
+    private CarRepository carRepositoryMock;
 
     @Mock
-    private CarMapper mapperMock;
+    private CarMapper carMapperMock;
 
     private final CarDTO carDTOMock = CarCreator.createValidCarDTO();
 
     private final Car carMock = CarCreator.createValidCar();
 
+    private final User userMock = UserCreator.createValidUser();
+
+    private final UserDTO userDTOMock = UserCreator.createValidUserDTO();
+
 
     @BeforeEach
     void setUp() {
 
-        BDDMockito.when(mapperMock.toDTO(carMock))
+        BDDMockito.when(carMapperMock.toDTO(carRepositoryMock.findCarsByUserId(ArgumentMatchers.anyLong())))
+                .thenReturn(singletonList(carDTOMock));
+
+        BDDMockito.when(carMapperMock.toDTO(carRepositoryMock.save(ArgumentMatchers.any(Car.class))))
                 .thenReturn(carDTOMock);
 
-        BDDMockito.when(mapperMock.toDTO(repositoryMock.findCarsByUserId(ArgumentMatchers.anyLong())))
-                .thenReturn(singletonList(carDTOMock));
+        BDDMockito.when(carMapperMock.toDTO(carMock))
+                .thenReturn(carDTOMock);
+
+        BDDMockito.doNothing().when(carRepositoryMock).delete(ArgumentMatchers.any(Car.class));
+
+
+
     }
 
     @Test
     void findAllByUserLogged() {
 
-        User user = new User();
-        user.setId(1L);
-        List<CarDTO>  carsDTO = service.findAllByUserLogged(user);
+        List<CarDTO>  carsDTO = service.findAllByUserLogged(userMock.getId());
 
         Assertions.assertThat(carsDTO)
                 .isNotNull()
                 .isNotEmpty()
                 .hasSize(1);
+    }
+
+    @Test
+    void testCreateCarByUserLogged() {
+        final CarDTO carDTOtoBeSaved = CarCreator.createCarDTOtoBeSaved();
+        carDTOtoBeSaved.setUser(userDTOMock);
+
+        final CarDTO carDTO = service.createByUserLogged(carDTOtoBeSaved);
+
+        Assertions.assertThat(carDTO).isNotNull().isEqualTo(carDTOMock);
     }
 }

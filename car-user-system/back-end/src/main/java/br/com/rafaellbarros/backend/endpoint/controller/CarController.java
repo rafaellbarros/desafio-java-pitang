@@ -4,7 +4,7 @@ package br.com.rafaellbarros.backend.endpoint.controller;
 import br.com.rafaellbarros.backend.endpoint.service.CarService;
 import br.com.rafaellbarros.backend.endpoint.service.UserAuthenticatedService;
 import br.com.rafaellbarros.core.model.dto.CarDTO;
-import br.com.rafaellbarros.core.model.entity.User;
+import br.com.rafaellbarros.core.model.dto.UserDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +33,15 @@ public class CarController {
     @ApiOperation("Find all cars by id user logged")
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<CarDTO>> findAllByUserLogged() {
-        final User user = userAuthenticatedService.geLogged();
-        return ResponseEntity.ok(service.findAllByUserLogged(user));
+        final UserDTO userLogged = userAuthenticatedService.geLogged();
+        return ResponseEntity.ok(service.findAllByUserLogged(userLogged.getId()));
     }
 
     @ApiOperation("Create car by id user logged")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CarDTO> createByUserLogged(@Valid @RequestBody final CarDTO carDTO) {
-        final User user = userAuthenticatedService.geLogged();
-        return new ResponseEntity<>(service.createByUserLogged(user.getId(), carDTO), HttpStatus.CREATED);
+        final UserDTO userLogged = userAuthenticatedService.geLogged();
+        carDTO.setUser(userLogged);
+        return new ResponseEntity<>(service.createByUserLogged(carDTO), HttpStatus.CREATED);
     }
 }
