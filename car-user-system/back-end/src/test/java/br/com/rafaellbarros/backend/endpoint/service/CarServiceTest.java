@@ -4,6 +4,7 @@ import br.com.rafaellbarros.backend.endpoint.mapper.CarMapper;
 import br.com.rafaellbarros.backend.utils.CarCreator;
 import br.com.rafaellbarros.core.model.dto.CarDTO;
 import br.com.rafaellbarros.core.model.entity.Car;
+import br.com.rafaellbarros.core.model.entity.User;
 import br.com.rafaellbarros.core.repository.CarRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,9 @@ class CarServiceTest {
     @Test
     void findAllByUserLogged() {
 
-        List<CarDTO>  carsDTO = service.findAllByUserLogged(1L);
+        User user = new User();
+        user.setId(1L);
+        List<CarDTO>  carsDTO = service.findAllByUserLogged(user);
 
         Assertions.assertThat(carsDTO)
                 .isNotNull()

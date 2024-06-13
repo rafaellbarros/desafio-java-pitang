@@ -62,7 +62,7 @@ public class User extends BaseEntity<Long> {
     @Column
     private String phone;
 
-    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Car> cars;
     public User(@NotNull User user) {
         this.id = user.getId();

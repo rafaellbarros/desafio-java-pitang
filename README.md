@@ -380,3 +380,64 @@ Abrir um terminal pra cada aplicação
 ```
 
 ![Swagger Local](car-user-system/docs/images/swagger-local.png)
+
+### 5. Executando aplicações somente em um terminal
+
+Executando script para subir as aplicações somente em um terminal
+
+```ruby
+  chmod +x start-car-user-system-runner.sh
+```
+
+```ruby
+  ./start-car-user-system-runner.sh
+```
+
+Executando script para parar as aplicações somente em um terminal
+
+```ruby
+  chmod +x stop-car-user-system-runner.sh
+```
+
+```ruby
+  ./stop-car-user-system-runner.sh
+```
+
+2. Subir aplicação front-end:
+
+```ruby
+  cd front-car-user-system
+```
+
+```ruby
+  node --version
+  10.4.0
+```
+
+```ruby
+  npm install
+
+  120 packages are looking for funding
+  run `npm fund` for details
+
+  found 0 vulnerabilities
+  npm notice
+  npm notice New minor version of npm available! 10.4.0 -> 10.8.1
+  npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.8.1
+  npm notice Run npm install -g npm@10.8.1 to update!
+  npm notice
+```
+
+```ruby
+  ng serve
+
+  Application bundle generation complete. [1.860 seconds]
+
+  Watch mode enabled. Watching for file changes...
+    ➜  Local:   http://localhost:4200/
+    ➜  press h + enter to show help
+```
+
+![Car User System Users](front-car-user-system/docs/images/front-local-users.png)
+
+![Car User System Users](front-car-user-system/docs/images/front-local-cars.png)
