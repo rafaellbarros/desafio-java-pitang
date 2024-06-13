@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 
@@ -54,6 +55,9 @@ class CarServiceTest {
         BDDMockito.when(carMapperMock.toDTO(carMock))
                 .thenReturn(carDTOMock);
 
+        BDDMockito.when(carRepositoryMock.findByIdAndUserId(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.of(carMock));
+
         BDDMockito.doNothing().when(carRepositoryMock).delete(ArgumentMatchers.any(Car.class));
 
 
@@ -72,7 +76,7 @@ class CarServiceTest {
     }
 
     @Test
-    void testCreateCarByUserLogged() {
+    void testCreateByUserLogged() {
         final CarDTO carDTOtoBeSaved = CarCreator.createCarDTOtoBeSaved();
         carDTOtoBeSaved.setUser(userDTOMock);
 
@@ -80,4 +84,18 @@ class CarServiceTest {
 
         Assertions.assertThat(carDTO).isNotNull().isEqualTo(carDTOMock);
     }
+
+    @Test
+    void testFindByIdUserLogged() {
+
+        final Long expectedId = carDTOMock.getId();
+
+        final CarDTO carDTO = service.findByIdUserLogged(1L, 1L);
+
+        Assertions.assertThat(carDTO).isNotNull();
+
+        Assertions.assertThat(carDTO.getId()).isNotNull().isEqualTo(expectedId);
+
+    }
+
 }

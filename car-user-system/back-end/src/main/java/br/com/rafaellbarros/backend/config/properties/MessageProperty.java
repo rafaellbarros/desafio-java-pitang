@@ -9,6 +9,7 @@ public enum MessageProperty  implements IMessageProperty {
 
     USER_NOT_FOUND("user-not-found"),
     CARS_NOT_FOUND("cars-not-found"),
+    CAR_NOT_FOUND("car-not-found"),
     EMAIL_ALREADY_EXISTS("email-already-exists"),
     LOGIN_ALREADY_EXISTS("login-already-exists");
 

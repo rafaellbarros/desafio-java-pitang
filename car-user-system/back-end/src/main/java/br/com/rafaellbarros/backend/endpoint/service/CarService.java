@@ -1,9 +1,13 @@
 package br.com.rafaellbarros.backend.endpoint.service;
 
 
+import br.com.rafaellbarros.backend.config.properties.MessageProperty;
 import br.com.rafaellbarros.backend.endpoint.mapper.CarMapper;
+import br.com.rafaellbarros.core.exception.BusinessException;
 import br.com.rafaellbarros.core.model.dto.CarDTO;
+import br.com.rafaellbarros.core.model.dto.UserDTO;
 import br.com.rafaellbarros.core.model.entity.Car;
+import br.com.rafaellbarros.core.model.entity.User;
 import br.com.rafaellbarros.core.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,5 +38,14 @@ public class CarService {
 
     private List<Car> findAllEntitiesByUserId(final Long userId) {
         return repository.findCarsByUserId(userId);
+    }
+
+    public CarDTO findByIdUserLogged(Long id, Long userId) {
+        final Car car = fiindEntityByIdAndUserId(id, userId);
+        return mapper.toDTO(car);
+    }
+
+    private Car fiindEntityByIdAndUserId(final Long id, final Long userId) {
+        return repository.findByIdAndUserId(id, userId).orElseThrow(() -> new BusinessException(MessageProperty.CAR_NOT_FOUND));
     }
 }
