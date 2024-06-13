@@ -40,12 +40,19 @@ public class CarService {
         return repository.findCarsByUserId(userId);
     }
 
-    public CarDTO findByIdUserLogged(Long id, Long userId) {
+    public CarDTO findByIdUserLogged(final Long id, final Long userId) {
         final Car car = fiindEntityByIdAndUserId(id, userId);
         return mapper.toDTO(car);
+    }
+
+    public void deleteByIdUserLogged(final Long id, final Long userId) {
+        final Car car = fiindEntityByIdAndUserId(id, userId);
+        repository.delete(car);
     }
 
     private Car fiindEntityByIdAndUserId(final Long id, final Long userId) {
         return repository.findByIdAndUserId(id, userId).orElseThrow(() -> new BusinessException(MessageProperty.CAR_NOT_FOUND));
     }
+
+
 }

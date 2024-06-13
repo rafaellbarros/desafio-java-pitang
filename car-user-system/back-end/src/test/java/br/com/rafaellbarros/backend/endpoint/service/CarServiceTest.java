@@ -60,8 +60,6 @@ class CarServiceTest {
 
         BDDMockito.doNothing().when(carRepositoryMock).delete(ArgumentMatchers.any(Car.class));
 
-
-
     }
 
     @Test
@@ -96,6 +94,12 @@ class CarServiceTest {
 
         Assertions.assertThat(carDTO.getId()).isNotNull().isEqualTo(expectedId);
 
+    }
+
+    @Test
+    void testDeleteById() {
+        Assertions.assertThatCode(() -> service.deleteByIdUserLogged(1L, 1L))
+                .doesNotThrowAnyException();
     }
 
 }
