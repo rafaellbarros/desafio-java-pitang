@@ -93,7 +93,7 @@ Para manter meus dados atualizados no sistema.
 - [x] ✅ 2. Como usuário autenticado, desejo cadastrar um novo carro para o usuário autenticado.
 - [x] ✅ 3. Como usuário autenticado, desejo buscar um carro do usuário autenticado pelo id.
 - [x] ✅ 4. Como usuário autenticado, desejo remover um carro do usuário autenticado pelo id.
-- [ ] ❌ 5. Como usuário autenticado, desejo atualizar um carro do usuário autenticado pelo id.
+- [x] ✅ 5. Como usuário autenticado, desejo atualizar um carro do usuário autenticado pelo id.
 
 ### Especificações:
 

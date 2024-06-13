@@ -25,6 +25,16 @@ public class CarCreator {
                 .build();
     }
 
+    public static CarDTO createValidUpdateCarDTO() {
+        return CarDTO.builder()
+                .id(1L)
+                .year(2024L)
+                .licensePlate("PDV-0625")
+                .model("Audi Update")
+                .color("White Update")
+                .build();
+    }
+
     public static Car createValidCar() {
         return Car.builder()
                 .id(1L)

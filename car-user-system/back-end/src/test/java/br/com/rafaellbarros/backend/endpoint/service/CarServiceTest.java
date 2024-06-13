@@ -97,9 +97,21 @@ class CarServiceTest {
     }
 
     @Test
-    void testDeleteById() {
+    void testDeleteByIdUserLogged() {
         Assertions.assertThatCode(() -> service.deleteByIdUserLogged(1L, 1L))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    void testUpdateById() {
+        final CarDTO validUpdateCarDTO = CarCreator.createValidUpdateCarDTO();
+
+        BDDMockito.when(carMapperMock.toDTO(carRepositoryMock.save(ArgumentMatchers.any(Car.class))))
+                .thenReturn(validUpdateCarDTO);
+
+        final CarDTO carDTO = service.updateByUserLogged(validUpdateCarDTO, 1L);
+
+        Assertions.assertThat(carDTO).isNotNull().isEqualTo(validUpdateCarDTO);
     }
 
 }

@@ -5,9 +5,7 @@ import br.com.rafaellbarros.backend.config.properties.MessageProperty;
 import br.com.rafaellbarros.backend.endpoint.mapper.CarMapper;
 import br.com.rafaellbarros.core.exception.BusinessException;
 import br.com.rafaellbarros.core.model.dto.CarDTO;
-import br.com.rafaellbarros.core.model.dto.UserDTO;
 import br.com.rafaellbarros.core.model.entity.Car;
-import br.com.rafaellbarros.core.model.entity.User;
 import br.com.rafaellbarros.core.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,6 +46,13 @@ public class CarService {
     public void deleteByIdUserLogged(final Long id, final Long userId) {
         final Car car = fiindEntityByIdAndUserId(id, userId);
         repository.delete(car);
+    }
+
+    public CarDTO updateByUserLogged(final CarDTO carDTO, final Long userId) {
+        final Car car = fiindEntityByIdAndUserId(carDTO.getId(), userId);
+
+        mapper.fromDTO(carDTO, car);
+        return  mapper.toDTO(repository.save(repository.save(car)));
     }
 
     private Car fiindEntityByIdAndUserId(final Long id, final Long userId) {

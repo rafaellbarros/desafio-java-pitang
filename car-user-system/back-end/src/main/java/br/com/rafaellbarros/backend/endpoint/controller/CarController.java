@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,5 +61,14 @@ public class CarController {
         final UserDTO userLogged = userAuthenticatedService.geLogged();
         service.deleteByIdUserLogged(id, userLogged.getId());
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation("Update car by id user logged")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CarDTO> updateByUserLogged(@PathVariable final Long id, @Valid @RequestBody final CarDTO carDTO) {
+        final UserDTO userLogged = userAuthenticatedService.geLogged();
+        carDTO.setId(id);
+        carDTO.setUser(userLogged);
+        return ResponseEntity.ok(service.updateByUserLogged(carDTO, userLogged.getId()));
     }
 }
