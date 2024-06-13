@@ -8,12 +8,16 @@ import br.com.rafaellbarros.core.model.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -31,5 +35,12 @@ public class CarController {
     public ResponseEntity<List<CarDTO>> findAllByUserLogged() {
         final User user = userAuthenticatedService.geLogged();
         return ResponseEntity.ok(service.findAllByUserLogged(user));
+    }
+
+    @ApiOperation("Create car by id user logged")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CarDTO> createByUserLogged(@Valid @RequestBody final CarDTO carDTO) {
+        final User user = userAuthenticatedService.geLogged();
+        return new ResponseEntity<>(service.createByUserLogged(user.getId(), carDTO), HttpStatus.CREATED);
     }
 }

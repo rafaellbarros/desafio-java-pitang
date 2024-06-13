@@ -27,7 +27,25 @@
           <td>{{ user.birthday | date : "dd/MM/yyyy" }}</td>
           <td>{{ user.login }}</td>
           <td>{{ user.phone }}</td>
-          <td>{{ user.cars | json }}</td>
+          <td>
+            <ul>
+              <li>
+                <a [routerLink]="['/', 'car']" routerLinkActive="active"
+                  >Cars</a
+                >
+              </li>
+              <li
+                *ngFor="let car of user.cars; let i = index"
+                [ngClass]="'item-' + (i % 3)"
+              >
+                <strong>ID:</strong> {{ car.id }}<br />
+                <strong>Year:</strong> {{ car.year }}<br />
+                <strong>License Plate:</strong> {{ car.licensePlate }}<br />
+                <strong>Model:</strong> {{ car.model }}<br />
+                <strong>Color:</strong> {{ car.color }}<br />
+              </li>
+            </ul>
+          </td>
         </tr>
         }
       </tbody>

@@ -13,12 +13,12 @@ Para garantir o acesso seguro e a integridade dos dados no sistema.
 
 ### Critérios de Aceitação:
 
-- [x] 1. Como usuário, desejo realizar autenticação fornecendo meu login e senha e retornando o token de acesso.
-- [x] 2. Como usuário, desejo listar todos os usuários.
-- [x] 3. Como usuário, desejo cadastrar um novo usuário com os seguintes campos: nome, sobrenome, e-mail, data de nascimento, login, senha, telefone e carros.
-- [x] 4. Como usuário, desejo buscar um usuário pelo id.
-- [x] 5. Como usuário, desejo remover um usuário pelo id.
-- [x] 6. Como usuário, desejo atualizar um usuário pelo id.
+- [x] ✅ 1. Como usuário, desejo realizar autenticação fornecendo meu login e senha e retornando o token de acesso.
+- [x] ✅ 2. Como usuário, desejo listar todos os usuários.
+- [x] ✅ 3. Como usuário, desejo cadastrar um novo usuário com os seguintes campos: nome, sobrenome, e-mail, data de nascimento, login, senha, telefone e carros.
+- [x] ✅ 4. Como usuário, desejo buscar um usuário pelo id.
+- [x] ✅ 5. Como usuário, desejo remover um usuário pelo id.
+- [x] ✅ 6. Como usuário, desejo atualizar um usuário pelo id.
 
 ### Especificações:
 
@@ -68,7 +68,7 @@ Gostaria de visualizar minhas informações pessoais.
 
 ### Critérios de Aceitação:
 
-- [ ] 1. Como usuário autenticado, consultar as minhas informações.
+- [ ] ❌ 1. Como usuário autenticado, consultar as minhas informações.
 
 ### Especificações:
 
@@ -89,11 +89,11 @@ Para manter meus dados atualizados no sistema.
 
 ### Critérios de Aceitação:
 
-- [x] 1. Como usuário autenticado, desejo listar todos os carros do usuário autenticado.
-- [ ] 2. Como usuário autenticado, desejo cadastrar um novo carro para o usuário autenticado.
-- [ ] 3. Como usuário autenticado, desejo buscar um carro do usuário autenticado pelo id.
-- [ ] 4. Como usuário autenticado, desejo remover um carro do usuário autenticado pelo id.
-- [ ] 5. Como usuário autenticado, desejo atualizar um carro do usuário autenticado pelo id.
+- [x] ✅ 1. Como usuário autenticado, desejo listar todos os carros do usuário autenticado.
+- [x] ✅ 2. Como usuário autenticado, desejo cadastrar um novo carro para o usuário autenticado.
+- [ ] ❌ 3. Como usuário autenticado, desejo buscar um carro do usuário autenticado pelo id.
+- [ ] ❌ 4. Como usuário autenticado, desejo remover um carro do usuário autenticado pelo id.
+- [ ] ❌ 5. Como usuário autenticado, desejo atualizar um carro do usuário autenticado pelo id.
 
 ### Especificações:
 
