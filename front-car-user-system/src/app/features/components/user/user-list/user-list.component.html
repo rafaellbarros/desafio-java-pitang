@@ -1,5 +1,16 @@
 <h1>Users</h1>
 
+<!-- The filter section -->
+<mat-form-field aria-haspopup="outline">
+  <mat-label>Filter</mat-label>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="ID, First Name, Last Name, Email, Birthday, Login and Phone"
+    #input
+  />
+</mat-form-field>
+
 <div class="table-container">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="id">

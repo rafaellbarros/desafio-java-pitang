@@ -39,6 +39,15 @@ export class CarListComponent implements OnInit {
     this.getCarsList();
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   openAddEditCarDialog() {
     const dialogRef = this.dialog.open(CarAddEditFormComponent);
     dialogRef.afterClosed().subscribe({

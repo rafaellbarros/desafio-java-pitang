@@ -42,6 +42,15 @@ export class UserListComponent implements OnInit {
     this.getUsersList();
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   openAddEditUserDialog() {
     const dialogRef = this.dialog.open(UserAddEditFormComponent);
     dialogRef.afterClosed().subscribe({
