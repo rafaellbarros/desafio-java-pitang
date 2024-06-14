@@ -91,16 +91,18 @@ export class UserListComponent implements OnInit {
 
   private delete(id: number): void {
     this.userService.delete(id).subscribe({
-      next: (res) => {
+      next: (resp) => {
         this.snackBarService.openSnackBar('User deleted!', 'Success');
         this.getUsersList();
       },
       error: (err) => {
-        console.error(err);
-        this.snackBarService.openSnackBar(
-          'Error while deleted the user!',
-          'Error'
-        );
+        console.error('[ERROR] : ', err);
+        let erroMessage = 'Error while deleted the user!';
+        if (err.error.length > 0) {
+          const error = err.error[0];
+          erroMessage = error.message;
+        }
+        this.snackBarService.openSnackBar(erroMessage, 'Error');
       },
     });
   }

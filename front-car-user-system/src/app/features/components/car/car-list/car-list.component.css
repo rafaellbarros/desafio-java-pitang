@@ -1,0 +1,15 @@
+/* styles.css */
+.table-container {
+  position: relative;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.action-icon:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}

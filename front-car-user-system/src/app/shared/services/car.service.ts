@@ -17,4 +17,16 @@ export class CarService {
   findAllByUserLogged(): Observable<Car[]> {
     return this.http.get<Car[]>(this.url);
   }
+
+  createByUserLogged(car: Car): Observable<Car> {
+    return this.http.post<Car>(this.url, car);
+  }
+
+  updateByUserLogged(id: number, car: Car): Observable<Car> {
+    return this.http.put<Car>(`${this.url}/${id}`, car);
+  }
+
+  deleteByUserLogged(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
+  }
 }

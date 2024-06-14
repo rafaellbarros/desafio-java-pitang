@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../../../core/auth/auth.service';
-import { SigninModel } from '../../../../shared/models/signin.model';
+
+import { Signin } from '../../../../shared/interfaces/signin';
 import { LoginService } from '../../../../shared/services/login.service';
+import { SnackBarService } from './../../../../shared/services/snack-bar.service';
 
 @Component({
   selector: 'login-form',
@@ -13,8 +14,6 @@ import { LoginService } from '../../../../shared/services/login.service';
   styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent implements OnInit {
-  durationInSeconds = 3000;
-
   formLogin!: FormGroup;
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
@@ -22,7 +21,7 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private loginService: LoginService,
-    private snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<LoginFormComponent>
   ) {}
@@ -40,31 +39,31 @@ export class LoginFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formLogin.valid) {
-      const signin = this.formLogin.value as SigninModel;
-      this.authService.authentication(signin).subscribe(
-        (resp) => {
+      const signin = this.formLogin.value as Signin;
+      this.authService.authentication(signin).subscribe({
+        next: (resp: any) => {
           const { token } = resp;
           const authToken = token.replace('Bearer ', '');
           if (authToken) {
             this.loginService.setToken(authToken);
             this.isAuthenticatedSubject.next(true);
-            this.openSnackBar('Login successfully!', 'Success');
+            this.snackBarService.openSnackBar('Login successfully!', 'Success');
             this.dialogRef.close(true);
+            this.formLogin.reset();
           }
         },
-        (error) => {
-          this.openSnackBar(`Error logging in: ${error}`, 'Error');
-          console.error('Error logging in:', error);
-        }
-      );
+        error: (err: any) => {
+          console.error('[ERROR] : ', err);
+          let erroMessage = 'Error while login user!';
+          if (err.error.length > 0) {
+            const error = err.error[0];
+            erroMessage = error.message;
+          }
+          this.snackBarService.openSnackBar(erroMessage, 'Error');
+        },
+      });
     } else {
-      this.openSnackBar(`Required fields!!!`, 'Warnning');
+      this.snackBarService.openSnackBar('Required fields!!!', 'Error');
     }
-  }
-
-  openSnackBar(message: string, action: string): void {
-    this.snackBar.open(message, action, {
-      duration: this.durationInSeconds,
-    });
   }
 }

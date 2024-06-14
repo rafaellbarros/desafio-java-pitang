@@ -11,8 +11,10 @@ public enum MessageProperty  implements IMessageProperty {
     CARS_NOT_FOUND("cars-not-found"),
     CAR_NOT_FOUND("car-not-found"),
     EMAIL_ALREADY_EXISTS("email-already-exists"),
-    LOGIN_ALREADY_EXISTS("login-already-exists");
-
+    LOGIN_ALREADY_EXISTS("login-already-exists"),
+    UNAUTHORIZED_ACCESS("unauthorized-access"),
+    HTTP_CLIENT_ERROR_EXCEPTION("http-client-error-exception"),
+    UNEXPECTED_ERROR("unexpected-error");
     private String key;
     private String[] args = {};
 

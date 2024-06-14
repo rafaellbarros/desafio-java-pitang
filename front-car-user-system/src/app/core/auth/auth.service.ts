@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 import { Observable } from 'rxjs';
+
+import { Signin } from '../../shared/interfaces/signin';
 import { TokenResponse } from '../../shared/interfaces/token.response';
-import { SigninModel } from '../../shared/models/signin.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
     this.url = `${environment.apiUrlSignin}`;
   }
 
-  authentication(signin: SigninModel): Observable<TokenResponse> {
+  authentication(signin: Signin): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(`${this.url}`, signin);
   }
 }

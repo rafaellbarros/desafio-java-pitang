@@ -1,0 +1,56 @@
+<div mat-dialog-title>
+  <h1>{{ data ? "Edit" : "Add" }} Car</h1>
+</div>
+
+<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Year:</mat-label>
+        <input matInput type="text" placeholder="Year" formControlName="year" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>License Plate:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="License Plate"
+          formControlName="licensePlate"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Model:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Model"
+          formControlName="model"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Color:</mat-label>
+        <input
+          matInput
+          placeholder="Color"
+          type="text"
+          formControlName="color"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action-btns">
+    <button style="margin: 10px" mat-raised-button color="accent" type="submit">
+      {{ data ? "Update" : "Save" }}
+    </button>
+    <button
+      mat-raised-button
+      type="button"
+      color="warn"
+      [mat-dialog-close]="false"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
