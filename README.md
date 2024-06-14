@@ -238,7 +238,7 @@ Bootstrap é utilizado para estilização e design responsivo. Ele fornece uma c
 1. Subir aplicação back-end:
 
 ```ruby
-  cd car-user-system
+  cd back-car-user-system
 ```
 
 ```ruby
@@ -284,15 +284,15 @@ Maven
   [INFO] ------------------------------------------------------------------------
   [INFO] Reactor Summary:
   [INFO]
-  [INFO] car-user-system 1.0 ................................ SUCCESS [  0.252 s]
-  [INFO] back-end 1.0.0 ..................................... SUCCESS [ 10.463 s]
-  [INFO] core 1.0.0 ......................................... SUCCESS [  0.764 s]
-  [INFO] token 1.0.0 ........................................ SUCCESS [  0.526 s]
+  [INFO] back-car-user-system 1.0 ........................... SUCCESS [  0.256 s]
+  [INFO] back-end 1.0.0 ..................................... SUCCESS [ 10.049 s]
+  [INFO] core 1.0.0 ......................................... SUCCESS [  0.783 s]
+  [INFO] token 1.0.0 ........................................ SUCCESS [  0.479 s]
   [INFO] ------------------------------------------------------------------------
   [INFO] BUILD SUCCESS
   [INFO] ------------------------------------------------------------------------
-  [INFO] Total time:  12.222 s
-  [INFO] Finished at: 2024-06-14T17:39:45-03:00
+  [INFO] Total time:  11.772 s
+  [INFO] Finished at: 2024-06-14T18:10:10-03:00
   [INFO] ------------------------------------------------------------------------
 ```
 
@@ -377,9 +377,9 @@ Abrir um terminal pra cada aplicação
   2024-06-06 02:59:28.639  INFO 59435 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
 ```
 
-![Swagger](car-user-system/docs/images/swagger-01.png)
+![Swagger](back-car-user-system/docs/images/swagger-01.png)
 
-![Swagger](car-user-system/docs/images/swagger-02.png)
+![Swagger](back-car-user-system/docs/images/swagger-02.png)
 
 ### 5. Executando aplicações somente em um terminal
 
