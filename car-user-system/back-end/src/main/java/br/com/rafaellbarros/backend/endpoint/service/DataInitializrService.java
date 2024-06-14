@@ -2,13 +2,12 @@ package br.com.rafaellbarros.backend.endpoint.service;
 
 import br.com.rafaellbarros.core.model.entity.Car;
 import br.com.rafaellbarros.core.model.entity.User;
-import br.com.rafaellbarros.core.repository.CarRepository;
 import br.com.rafaellbarros.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,7 +21,7 @@ import java.util.List;
 public class DataInitializrService implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserRepository userRepository;
-    private final CarRepository carRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -63,7 +62,7 @@ public class DataInitializrService implements ApplicationListener<ContextRefresh
                 .firstName(firstName)
                 .lastName(lastName)
                 .login(login)
-                .password(new BCryptPasswordEncoder().encode(password))
+                .password(passwordEncoder.encode(password))
                 .phone(phone)
                 .cars(cars)
                 .build();
