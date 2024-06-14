@@ -227,7 +227,7 @@ Bootstrap é utilizado para estilização e design responsivo. Ele fornece uma c
 
 2. Acessar Aplicação:
 
-   - Navegue para http://localhost
+   - Navegue para http://localhost:4200
 
 3. Acessar Api:
 
@@ -284,18 +284,15 @@ Maven
   [INFO] ------------------------------------------------------------------------
   [INFO] Reactor Summary:
   [INFO]
-  [INFO] car-user-system 1.0-SNAPSHOT ....................... SUCCESS [  0.348 s]
-  [INFO] core 1.0-SNAPSHOT .................................. SUCCESS [  5.006 s]
-  [INFO] token 1.0-SNAPSHOT ................................. SUCCESS [  0.505 s]
-  [INFO] back-end 0.0.1-SNAPSHOT ............................ SUCCESS [  8.181 s]
-  [INFO] discovery 0.0.1-SNAPSHOT ........................... SUCCESS [  1.814 s]
-  [INFO] gateway 0.0.1-SNAPSHOT ............................. SUCCESS [  1.885 s]
-  [INFO] auth 0.0.1-SNAPSHOT ................................ SUCCESS [  1.740 s]
+  [INFO] car-user-system 1.0 ................................ SUCCESS [  0.252 s]
+  [INFO] back-end 1.0.0 ..................................... SUCCESS [ 10.463 s]
+  [INFO] core 1.0.0 ......................................... SUCCESS [  0.764 s]
+  [INFO] token 1.0.0 ........................................ SUCCESS [  0.526 s]
   [INFO] ------------------------------------------------------------------------
   [INFO] BUILD SUCCESS
   [INFO] ------------------------------------------------------------------------
-  [INFO] Total time:  19.741 s
-  [INFO] Finished at: 2024-06-06T02:18:22-03:00
+  [INFO] Total time:  12.222 s
+  [INFO] Finished at: 2024-06-14T17:39:45-03:00
   [INFO] ------------------------------------------------------------------------
 ```
 

@@ -11,16 +11,13 @@
 
     <groupId>br.com.rafaellbarros</groupId>
     <artifactId>car-user-system</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>back-end</module>
         <module>core</module>
         <module>token</module>
-        <module>discovery</module>
-        <module>gateway</module>
-        <module>auth</module>
     </modules>
 
     <properties>

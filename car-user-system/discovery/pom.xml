@@ -5,12 +5,12 @@
     <parent>
         <groupId>br.com.rafaellbarros</groupId>
         <artifactId>car-user-system</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
         <relativePath>../</relativePath> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>discovery</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>discovery</name>
     <description>Car User System Service Discovery</description>
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { version } from '../../package.json';
 import { LoginFormComponent } from './features/components/login/login-form/login-form.component';
 import { LoginService } from './shared/services/login.service';
 
@@ -11,6 +12,7 @@ import { LoginService } from './shared/services/login.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  public appVersion;
   public title = 'Car User System';
   public isAuthenticated: boolean = false;
 
@@ -21,7 +23,9 @@ export class AppComponent {
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.appVersion = version;
+  }
 
   ngOnInit(): void {
     this.loginService.isAuthenticated().subscribe((isAuthenticated) => {
