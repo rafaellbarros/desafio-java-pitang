@@ -439,6 +439,14 @@ Executando script para parar as aplicações somente em um terminal
     ➜  press h + enter to show help
 ```
 
-![Car User System Users](front-car-user-system/docs/images/front-local-users.png)
+![Car User System](front-car-user-system/docs/images/car-user-system-01.png)
 
-![Car User System Users](front-car-user-system/docs/images/front-local-cars.png)
+![Car User System](front-car-user-system/docs/images/car-user-system-02.png)
+
+![Car User System](front-car-user-system/docs/images/car-user-system-03.png)
+
+![Car User System](front-car-user-system/docs/images/car-user-system-04.png)
+
+![Car User System](front-car-user-system/docs/images/car-user-system-05.png)
+
+![Car User System](front-car-user-system/docs/images/car-user-system-06.png)
