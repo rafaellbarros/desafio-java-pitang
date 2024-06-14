@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>br.com.rafaellbarros</groupId>
-    <artifactId>car-user-system</artifactId>
+    <artifactId>back-car-user-system</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 

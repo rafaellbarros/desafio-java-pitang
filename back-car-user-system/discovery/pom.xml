@@ -4,43 +4,47 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>br.com.rafaellbarros</groupId>
-        <artifactId>car-user-system</artifactId>
+        <artifactId>back-car-user-system</artifactId>
         <version>1.0</version>
         <relativePath>../</relativePath> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>gateway</artifactId>
+    <artifactId>discovery</artifactId>
     <version>1.0.0</version>
-    <name>gateway</name>
-    <description>Car User System Gateway</description>
+    <name>discovery</name>
+    <description>Car User System Service Discovery</description>
 
     <properties>
         <java.version>1.8</java.version>
-        <car-user-system-core.version>1.0-SNAPSHOT</car-user-system-core.version>
-        <car-user-system-token.version>1.0-SNAPSHOT</car-user-system-token.version>
+        <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
+        <javax-activation.version>1.2.0</javax-activation.version>
+        <jakarta.xml.bind-api.version>4.0.2</jakarta.xml.bind-api.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>br.com.rafaellbarros</groupId>
-            <artifactId>token</artifactId>
-            <version>${car-user-system-token.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>br.com.rafaellbarros</groupId>
-            <artifactId>core</artifactId>
-            <version>${car-user-system-core.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${jakarta.xml.bind-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+            <version>${javax-activation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>${jaxb-runtime.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>gateway</finalName>
+        <finalName>discovery</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
