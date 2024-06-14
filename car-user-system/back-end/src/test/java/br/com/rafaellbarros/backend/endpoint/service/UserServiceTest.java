@@ -14,6 +14,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -26,21 +27,24 @@ class UserServiceTest {
 
     @InjectMocks
     private UserService service;
+
     @Mock
     private UserRepository repositoryMock;
+
     @Mock
     private UserMapper mapperMock;
 
     @Mock
-    private  UserValidation validationMock;
+    private UserValidation validationMock;
+
+    @Mock
+    private PasswordEncoder passwordEncoderMock;
 
     private final UserDTO userDTOMock = UserCreator.createValidUserDTO();
-
     private final User userMock = UserCreator.createValidUser();
 
     @BeforeEach
     void setUp() {
-
         BDDMockito.when(mapperMock.toDTO(repositoryMock.findAll()))
                 .thenReturn(singletonList(userDTOMock));
 
@@ -49,17 +53,20 @@ class UserServiceTest {
 
         BDDMockito.when(mapperMock.toDTO(userMock))
                 .thenReturn(userDTOMock);
+
         BDDMockito.when(repositoryMock.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.of(userMock));
 
         BDDMockito.doNothing().when(repositoryMock).delete(ArgumentMatchers.any(User.class));
 
+        BDDMockito.doNothing().when(validationMock).existsFields(ArgumentMatchers.any(UserDTO.class));
 
+        BDDMockito.when(passwordEncoderMock.encode(ArgumentMatchers.anyString()))
+                .thenReturn("encodedPassword");
     }
 
     @Test
     void findAll() {
-
         List<UserDTO> usersDTO = service.findAll();
 
         Assertions.assertThat(usersDTO)
@@ -72,7 +79,13 @@ class UserServiceTest {
     void testCreate() {
         UserDTO userDTOtoBeSaved = UserCreator.createUserDTOtoBeSaved();
 
-        final UserDTO userDTO = service.create(userDTOtoBeSaved);
+        BDDMockito.when(mapperMock.toEntity(userDTOtoBeSaved))
+                .thenReturn(userMock);
+
+        BDDMockito.when(repositoryMock.save(userMock))
+                .thenReturn(userMock);
+
+        UserDTO userDTO = service.create(userDTOtoBeSaved);
 
         Assertions.assertThat(userDTO).isNotNull().isEqualTo(userDTOMock);
     }
@@ -81,10 +94,9 @@ class UserServiceTest {
     void testFindById() {
         final Long expectedId = userDTOMock.getId();
 
-        final UserDTO userDTO = service.findById(1L);
+        UserDTO userDTO = service.findById(1L);
 
         Assertions.assertThat(userDTO).isNotNull();
-
         Assertions.assertThat(userDTO.getId()).isNotNull().isEqualTo(expectedId);
     }
 
@@ -98,10 +110,13 @@ class UserServiceTest {
     void testUpdateById() {
         UserDTO validUpdateUserDTO = UserCreator.createValidUpdateUserDTO();
 
-        BDDMockito.when(mapperMock.toDTO(repositoryMock.save(ArgumentMatchers.any(User.class))))
-                .thenReturn(validUpdateUserDTO);
+        BDDMockito.when(mapperMock.toEntity(validUpdateUserDTO))
+                .thenReturn(userMock);
 
-        final UserDTO userDTO = service.update(validUpdateUserDTO);
+        BDDMockito.when(repositoryMock.save(userMock))
+                .thenReturn(userMock);
+
+        UserDTO userDTO = service.update(validUpdateUserDTO);
 
         Assertions.assertThat(userDTO).isNotNull().isEqualTo(validUpdateUserDTO);
     }
