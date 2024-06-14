@@ -2,6 +2,7 @@ package br.com.rafaellbarros.backend.endpoint.service;
 
 
 import br.com.rafaellbarros.core.model.dto.SigninDTO;
+import br.com.rafaellbarros.core.model.dto.TokenResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ public class SigninService {
 
     private final RestTemplate restTemplate;
 
-    public String signin(final SigninDTO signinDTO) {
+    public TokenResponseDTO signin(final SigninDTO signinDTO) {
 
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -36,6 +37,6 @@ public class SigninService {
                 .orElseGet(() -> "StatusCode: " + response.getStatusCode() + " Token not found in response.");
 
         log.info("GetToken() {}", token);
-        return token;
+        return new TokenResponseDTO(token);
     }
 }

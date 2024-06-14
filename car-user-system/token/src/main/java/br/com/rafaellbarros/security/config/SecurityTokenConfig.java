@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITE_LIST = {
+            "/**/**/signin/**",
             "/**/**/users/**",
             "/**/**/swagger-ui.html",
             "/**/**/swagger-resources/**",

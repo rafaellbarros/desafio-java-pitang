@@ -10,12 +10,13 @@ import br.com.rafaellbarros.core.model.entity.User;
 import br.com.rafaellbarros.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -30,35 +31,52 @@ public class UserService {
 
     private final UserValidation validation;
 
+    private final PasswordEncoder passwordEncoder;
+
     public List<UserDTO> findAll() {
         log.info("Listing all users");
-        return mapper.toDTO(repository.findAll());
+        return mapper.toDTO(getUsers());
     }
 
     public UserDTO create(final UserDTO userDTO) {
         log.info("Create user: {}", userDTO);
         validation.existsFields(userDTO);
-        userDTO.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return mapper.toDTO(repository.save(mapper.toEntity(userDTO)));
     }
 
     public UserDTO findById(final Long id) {
-        final User user = fiindEntityById(id);
+        final User user = findEntityById(id);
         return mapper.toDTO(user);
     }
 
     public void delete(Long id) {
-        final User user = fiindEntityById(id);
+        final User user = findEntityById(id);
         repository.delete(user);
     }
 
     public UserDTO update(final UserDTO userDTO) {
-        final User user = fiindEntityById(userDTO.getId());
+        log.info("Update user: {}", userDTO);
+        validation.existsFields(userDTO);
+        final User user = findEntityById(userDTO.getId());
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         mapper.fromDTO(userDTO, user);
         return  mapper.toDTO(repository.save(user));
     }
 
-    private User fiindEntityById(final Long id) {
-        return repository.findById(id).orElseThrow(() -> new BusinessException(MessageProperty.USER_NOT_FOUND));
+    public User findEntityById(final Long id) {
+        return repository.findById(id)
+                .map(user -> {
+                    user.setPassword("");
+                    return user;
+                })
+                .orElseThrow(() -> new BusinessException(MessageProperty.USER_NOT_FOUND));
+    }
+
+
+    private List<User> getUsers() {
+        return repository.findAll().stream()
+                .peek(user -> user.setPassword(""))
+                .collect(Collectors.toList());
     }
 }
