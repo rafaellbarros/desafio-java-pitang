@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -63,6 +68,14 @@ public class User extends BaseEntity<Long> {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Car> cars;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
     public User(@NotNull User user) {
         this.id = user.getId();
         this.login = user.getLogin();

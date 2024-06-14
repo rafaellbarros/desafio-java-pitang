@@ -22,7 +22,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] AUTH_BLACK_LIST = {
-            "/**/**/**/cars/**"
+            "/**/**/**/cars/**",
+            "/**/**/**/me/**",
     };
 
     protected final JwtConfiguration jwtConfiguration;

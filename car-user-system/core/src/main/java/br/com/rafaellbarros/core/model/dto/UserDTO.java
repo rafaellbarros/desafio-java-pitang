@@ -11,10 +11,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @ToString
@@ -54,5 +59,9 @@ public class UserDTO implements Serializable {
     private String phone;
 
     private List<CarDTO> cars;
+
+    private Date createdAt;
+
+    private LocalDateTime updatedAt;
 
 }

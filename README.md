@@ -64,11 +64,12 @@ Para garantir o acesso seguro e a integridade dos dados no sistema.
 
 **Descrição:**
 Como um usuário autenticado,
-Gostaria de visualizar minhas informações pessoais.
+Gostaria de visualizar as minhas informações.
 
 ### Critérios de Aceitação:
 
-- [ ] ❌ 1. Como usuário autenticado, consultar as minhas informações.
+- [x] ✅ 1. Como usuário autenticado, consultar as minhas as informações de usuário logado (firstName, lastName, email, birthday, login,
+      phone, cars) + createdAt (data da criação do usuário) + lastLogin (data da última vez que o usuário realizou login).
 
 ### Especificações:
 

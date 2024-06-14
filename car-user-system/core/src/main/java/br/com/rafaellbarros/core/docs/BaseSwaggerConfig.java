@@ -27,6 +27,7 @@ public class BaseSwaggerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(BaseSwaggerConfig.class);
     private static final String API_KEY_NAME = "JWT";
     private static final String SECURITY_CONTEXT_PATH_CARS = "/**/cars/**";
+    private static final String SECURITY_CONTEXT_PATH_USER_IFORMATION = "/**/me/**";
     private final AppProperties.Documentation properties;
 
     public BaseSwaggerConfig(final AppProperties.Documentation properties) {
@@ -76,7 +77,7 @@ public class BaseSwaggerConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.ant(SECURITY_CONTEXT_PATH_CARS))
+                .forPaths(CustomPathSelectors.multiplePaths(SECURITY_CONTEXT_PATH_CARS, SECURITY_CONTEXT_PATH_USER_IFORMATION))
                 .build();
     }
 
