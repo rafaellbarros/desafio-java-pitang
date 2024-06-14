@@ -380,7 +380,9 @@ Abrir um terminal pra cada aplicação
   2024-06-06 02:59:28.639  INFO 59435 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
 ```
 
-![Swagger Local](car-user-system/docs/images/swagger-local.png)
+![Swagger](car-user-system/docs/images/swagger-01.png)
+
+![Swagger](car-user-system/docs/images/swagger-02.png)
 
 ### 5. Executando aplicações somente em um terminal
 
