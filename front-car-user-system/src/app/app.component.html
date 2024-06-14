@@ -1,32 +1,51 @@
-<div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">Car User System</a>
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/user" class="nav-link" routerLink="user">User</a>
-      </li>
-      @if (!isLoggedIn) {
-      <li class="nav-item">
-        <a href="/car" class="nav-link" routerLink="car">Car</a>
-      </li>
-      }
-    </ul>
-    @if (!isLoggedIn) {
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
-    } @else {
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-    }
-  </nav>
-
-  <div class="container">
-    <router-outlet></router-outlet>
+<mat-toolbar
+  color="primary"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+>
+  <span>
+    <button mat-button routerLink="/">{{ title }}</button>
+    <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
+    <button mat-button routerLink="/user">User</button>
+    <button mat-button routerLink="/car" *ngIf="isAuthenticated">Car</button>
+  </span>
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button mat-button (click)="openLoginDialog()" *ngIf="!isAuthenticated">
+      <mat-icon>power_settings_new</mat-icon>
+      Login
+    </button>
+    <button mat-button (click)="logout()" *ngIf="isAuthenticated">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+    </button>
   </div>
+  <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-menu x-position="before" #menu="matMenu">
+  <button mat-menu-item routerLink="/">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <button mat-menu-item routerLink="/game">
+    <mat-icon>gamepad</mat-icon>
+    Play
+  </button>
+  <button mat-menu-item routerLink="/login">
+    <mat-icon>power_settings_new</mat-icon>
+    Login
+  </button>
+  <button mat-menu-item>
+    <mat-icon>exit_to_app</mat-icon>
+    Logout
+  </button>
+</mat-menu>
+<!-- The body of our app -->
+<div class="main-body">
+  <router-outlet></router-outlet>
 </div>
+
+<mat-toolbar color="primary" class="footer">
+  <span>© 2024 Rafael Barros.</span>
+</mat-toolbar>

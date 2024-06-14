@@ -1,9 +1,15 @@
-.item-0 {
-  color: red;
+/* styles.css */
+.table-container {
+  position: relative;
 }
-.item-1 {
-  color: green;
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
-.item-2 {
-  color: blue;
+
+.action-icon:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }

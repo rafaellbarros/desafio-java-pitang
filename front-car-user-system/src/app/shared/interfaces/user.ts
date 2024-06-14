@@ -7,6 +7,7 @@ export interface User {
   email: string;
   birthday: Date;
   login: string;
+  password: string;
   phone: string;
   cars: Car[];
 }

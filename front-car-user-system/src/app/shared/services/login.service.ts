@@ -1,37 +1,25 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { TokenService } from '../../core/token/token.service';
 import { Login } from '../interfaces/login';
-import { TokenDecoded } from '../interfaces/token';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private loginSubject = new BehaviorSubject<Login>(null!);
 
   constructor(private tokenService: TokenService) {
-    this.tokenService.hasToken() && this.decodeAndNotify();
+    this.checkAuthentication();
   }
 
   setToken(token: string) {
     this.tokenService.setToken(token);
-    this.decodeAndNotify();
+    this.isAuthenticatedSubject.next(true);
   }
 
   getToken() {
     return this.tokenService.getToken();
-  }
-
-  private decodeAndNotify() {
-    const token = this.tokenService.getTokenDecoded();
-    const login = this.createLogin(token);
-    this.loginSubject.next(login);
-  }
-
-  createLogin(token: TokenDecoded | null): Login {
-    return {
-      ...token,
-    } as any as Login;
   }
 
   getLogin() {
@@ -40,11 +28,16 @@ export class LoginService {
 
   logout() {
     this.tokenService.removeToken();
-    this.loginSubject.next(null!);
-    // window.location.href = environment.LOGIN_UNICO_LOGOUT;
+    this.isAuthenticatedSubject.next(false);
   }
 
-  isLogged() {
-    return this.tokenService.hasToken();
+  private checkAuthentication() {
+    const token = this.getToken();
+    const isAuthenticated = !!token;
+    this.isAuthenticatedSubject.next(isAuthenticated);
+  }
+
+  isAuthenticated(): Observable<boolean> {
+    return this.isAuthenticatedSubject.asObservable();
   }
 }

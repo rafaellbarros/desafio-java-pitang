@@ -1,0 +1,97 @@
+<div mat-dialog-title>
+  <h1>{{ data ? "Edit" : "Add" }} User</h1>
+</div>
+
+<div style="font-size: 10px">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content class="content">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>First name:</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="First name"
+            formControlName="firstName"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name:</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Last Name"
+            formControlName="lastName"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email:</mat-label>
+          <input
+            matInput
+            type="email"
+            placeholder="example@gmail.com"
+            formControlName="email"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Birthday:</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthday" />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Login:</mat-label>
+          <input
+            matInput
+            placeholder="Login"
+            type="text"
+            formControlName="login"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password:</mat-label>
+          <input
+            matInput
+            placeholder="Login"
+            type="password"
+            formControlName="password"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone:</mat-label>
+          <input
+            matInput
+            placeholder="Phone"
+            type="text"
+            formControlName="phone"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div mat-dialog-actions class="action-btns">
+      <button
+        style="margin: 10px"
+        mat-raised-button
+        color="accent"
+        type="submit"
+      >
+        {{ data ? "Update" : "Save" }}
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        color="warn"
+        [mat-dialog-close]="false"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
