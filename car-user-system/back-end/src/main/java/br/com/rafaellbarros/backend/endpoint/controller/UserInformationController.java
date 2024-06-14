@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "User Information")
 @RestController
-@RequestMapping("${apiPrefix}/me")
+@RequestMapping("${api-pre-fix}/me")
 @RequiredArgsConstructor
 public class UserInformationController {
 

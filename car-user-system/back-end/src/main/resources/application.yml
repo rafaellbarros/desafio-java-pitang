@@ -39,7 +39,8 @@ app-documentation:
   api-title: API Car User System
   description: @project.description@
 
-apiPrefix: /api
+api-pre-fix: /api
+url-auth-login: http://localhost:8080/gateway/auth/login
 
 logging:
   level:

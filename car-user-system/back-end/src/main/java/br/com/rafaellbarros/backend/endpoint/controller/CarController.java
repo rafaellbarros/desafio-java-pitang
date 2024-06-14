@@ -26,7 +26,7 @@ import java.util.List;
 
 @Api(tags = "Car")
 @RestController
-@RequestMapping("${apiPrefix}/cars")
+@RequestMapping("${api-pre-fix}/cars")
 @RequiredArgsConstructor
 public class CarController {
 
