@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        SONARQUBE_SERVER = 'http://sonarqube:9000'
+        SONARQUBE_SERVER = 'http://sonarqube:9001'
         SONARQUBE_CREDENTIALS = credentials('sonarqube-token')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
         DOCKER_IMAGE = 'rafaelbarros/desafio-java-pitang'
