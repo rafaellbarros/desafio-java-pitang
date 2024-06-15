@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        SONARQUBE_SERVER = 'http://sonarqube:9001'
+        SONARQUBE_SERVER = 'http://sonarqube:9000'
         SONARQUBE_CREDENTIALS = credentials('sonarqube-token')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
         DOCKER_IMAGE = 'rafaelbarros/desafio-java-pitang'
@@ -16,12 +16,16 @@ pipeline {
             parallel {
                 stage('Backend') {
                     steps {
-                        sh 'cd back-car-user-system && mvn clean install'
+                        dir('back-car-user-system') {
+                            sh 'mvn clean install'
+                        }
                     }
                 }
                 stage('Frontend') {
                     steps {
-                        sh 'cd front-car-user-system && npm install'
+                        dir('front-car-user-system') {
+                            sh 'npm install'
+                        }
                     }
                 }
             }
@@ -30,46 +34,39 @@ pipeline {
             parallel {
                 stage('Backend Tests') {
                     steps {
-                        sh 'cd back-car-user-system && mvn test'
+                        dir('back-car-user-system') {
+                            sh 'mvn test'
+                        }
                     }
                     post {
                         always {
-                            junit '**/back-car-user-system/target/surefire-reports/*.xml'
+                            junit '**/target/surefire-reports/*.xml'
                         }
                     }
                 }
                 stage('Frontend Tests') {
                     steps {
-                        sh 'cd front-car-user-system && npm run test'
+                        dir('front-car-user-system') {
+                            sh 'npm run test'
+                        }
                     }
                 }
             }
         }
-        stage('SonarQube Analysis - Backend') {
+        stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'cd back-car-user-system && mvn sonar:sonar'
-                }
-            }
-        }
-        stage('SonarQube Analysis - Frontend') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-                    cd front-car-user-system
-                    npm install -g sonar-scanner
-                    sonar-scanner \
-                      -Dsonar.projectKey=front-car-user-system \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=${SONARQUBE_SERVER} \
-                      -Dsonar.login=${SONARQUBE_CREDENTIALS}
-                    '''
+                    dir('back-car-user-system') {
+                        sh 'mvn sonar:sonar'
+                    }
                 }
             }
         }
         stage('Build Frontend') {
             steps {
-                sh 'cd front-car-user-system && npm run build'
+                dir('front-car-user-system') {
+                    sh 'npm run build'
+                }
             }
         }
         stage('Build Docker Images') {
